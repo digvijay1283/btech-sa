@@ -1,0 +1,98 @@
+{
+  "subject": "Big Data Analytics (BDA)",
+  "unit": "Unit 5 - Big Data Visualization & Graph Analytics",
+  "co": "CO5",
+  "total_questions": 36,
+  "topics": [
+    {
+      "topic_no": 1,
+      "topic": "Big Data Visualization - Fundamentals & Importance",
+      "questions": [
+        { "qno": 1, "question": "Illustrate the importance of Big Data visualization in analyzing large-scale datasets using a real-world application.", "difficulty": "easy", "bloom": "Understand (L2)" },
+        { "qno": 3, "question": "Relate the characteristics of Big Data—Volume, Velocity, Variety, Veracity, and Value—to the selection of suitable visualization techniques.", "difficulty": "easy", "bloom": "Understand (L2)" },
+        { "qno": 11, "question": "Examine the limitations of traditional visualization techniques when applied to Big Data.", "difficulty": "moderate", "bloom": "Analyze (L4)" }
+      ]
+    },
+    {
+      "topic_no": 2,
+      "topic": "Visualization Challenges - High Dimensionality, Unstructured & Missing Data",
+      "questions": [
+        { "qno": 2, "question": "Classify the major challenges of visualizing large-scale, high-dimensional datasets in Big Data Analytics.", "difficulty": "easy", "bloom": "Understand (L2)" },
+        { "qno": 9, "question": "Analyze the impact of high dimensionality on Big Data visualization and suggest suitable techniques to address it.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 16, "question": "Analyze the challenges associated with visualizing unstructured data and recommend suitable visualization techniques.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 30, "question": "Develop a strategy to visualize high-dimensional Big Data effectively while maintaining clarity, scalability, and interpretability.", "difficulty": "hard", "bloom": "Create (L6)" },
+        { "qno": 32, "question": "Formulate a framework for handling missing data in Big Data visualization systems while preserving the reliability of analytical results.", "difficulty": "hard", "bloom": "Create (L6)" }
+      ]
+    },
+    {
+      "topic_no": 3,
+      "topic": "Visual Data Analysis Techniques (Static vs Dynamic)",
+      "questions": [
+        { "qno": 4, "question": "Demonstrate the use of visual data analysis techniques to identify patterns and trends in a large retail dataset.", "difficulty": "easy", "bloom": "Apply (L3)" },
+        { "qno": 10, "question": "Compare different Visual Data Analysis Techniques used in Big Data applications.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 17, "question": "Compare static and dynamic visualizations in Big Data applications.", "difficulty": "moderate", "bloom": "Analyze (L4)" }
+      ]
+    },
+    {
+      "topic_no": 4,
+      "topic": "Interaction Techniques & Dashboards",
+      "questions": [
+        { "qno": 5, "question": "Apply interaction techniques such as filtering, zooming, and drill-down to analyze a large-scale sales dashboard.", "difficulty": "easy", "bloom": "Apply (L3)" },
+        { "qno": 13, "question": "Assess the impact of different interaction techniques on user experience in Big Data visualization.", "difficulty": "moderate", "bloom": "Evaluate (L5)" },
+        { "qno": 31, "question": "Design an interactive data visualization dashboard for real-time analytics, specifying appropriate charts, interaction techniques, and scalability requirements.", "difficulty": "hard", "bloom": "Create (L6)" }
+      ]
+    },
+    {
+      "topic_no": 5,
+      "topic": "Real-time / Streaming Visualization, Scalability & Cloud",
+      "questions": [
+        { "qno": 14, "question": "Illustrate the role of streaming visualization in handling large-scale live data.", "difficulty": "moderate", "bloom": "Apply (L3)" },
+        { "qno": 15, "question": "Analyze the importance of scalability in Big Data visualization systems.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 18, "question": "Examine the role of cloud computing in handling large-scale visualization tasks.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 12, "question": "Evaluate the effectiveness of real-time data visualization techniques in analytics.", "difficulty": "moderate", "bloom": "Evaluate (L5)" }
+      ]
+    },
+    {
+      "topic_no": 6,
+      "topic": "Graph Analytics - Fundamentals, Graph Types & Applications",
+      "questions": [
+        { "qno": 7, "question": "Illustrate how Graph Analytics identifies relationships among entities in a dataset.", "difficulty": "easy", "bloom": "Understand (L2)" },
+        { "qno": 8, "question": "List real-world applications of Graph Analytics.", "difficulty": "easy", "bloom": "Understand (L2)" },
+        { "qno": 19, "question": "Compare directed, undirected, and weighted graphs and assess their suitability for different Graph Analytics applications.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 27, "question": "Analyze the impact of edge-weight variations on Graph Analytics outcomes.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 21, "question": "Evaluate the impact of network topology on graph-based data analysis.", "difficulty": "moderate", "bloom": "Evaluate (L5)" }
+      ]
+    },
+    {
+      "topic_no": 7,
+      "topic": "Graph Algorithms - Centrality, Community Detection, Clustering & ML",
+      "questions": [
+        { "qno": 24, "question": "Illustrate the application of degree centrality and betweenness centrality in Graph Analytics using a suitable network.", "difficulty": "moderate", "bloom": "Apply (L3)", "type": "numerical" },
+        { "qno": 20, "question": "Analyze the role of machine learning in enhancing Graph Analytics techniques.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 22, "question": "Compare different community detection algorithms used for analyzing large graph datasets.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 26, "question": "Evaluate the trade-offs between computational efficiency and accuracy in graph clustering algorithms.", "difficulty": "moderate", "bloom": "Evaluate (L5)" }
+      ]
+    },
+    {
+      "topic_no": 8,
+      "topic": "Graph Tools & Scalability - Neo4j, Apache Giraph, Distributed Processing",
+      "questions": [
+        { "qno": 25, "question": "Examine the role of graph databases such as Neo4j in analyzing large-scale graph data.", "difficulty": "moderate", "bloom": "Analyze (L4)" },
+        { "qno": 28, "question": "Assess the effectiveness of distributed graph processing frameworks such as Apache Giraph for large-scale graph analysis.", "difficulty": "moderate", "bloom": "Evaluate (L5)" },
+        { "qno": 34, "question": "Formulate a method to improve scalability in graph-based visualization systems processing high-volume data.", "difficulty": "hard", "bloom": "Create (L6)" }
+      ]
+    },
+    {
+      "topic_no": 9,
+      "topic": "Graph Analytics for Transactions, Fraud & Anomaly Detection",
+      "questions": [
+        { "qno": 6, "question": "Illustrate the application of graph analytics to identify relationships and suspicious patterns in transactional data.", "difficulty": "easy", "bloom": "Understand (L2)" },
+        { "qno": 23, "question": "Assess how transactional data patterns can be extracted using Graph Analytics.", "difficulty": "moderate", "bloom": "Evaluate (L5)" },
+        { "qno": 35, "question": "Compare Graph Analytics applications in cybersecurity and healthcare, and recommend suitable graph-based methods for identifying anomalies in each domain.", "difficulty": "hard", "bloom": "Evaluate (L5)" },
+        { "qno": 36, "question": "Evaluate how Graph Analytics can improve the detection of anomalies in large graph datasets. Recommend suitable techniques and justify their applicability.", "difficulty": "hard", "bloom": "Evaluate (L5)" },
+        { "qno": 29, "question": "A financial institution wants to detect fraudulent transactions using Graph Analytics. Design a graph-based fraud detection approach and justify the selection of graph features and analytical techniques.", "difficulty": "hard", "bloom": "Create (L6)" },
+        { "qno": 33, "question": "Propose an efficient Graph Analytics method for extracting patterns from large-scale transactional data. Justify the selection of graph representation and analytical algorithms.", "difficulty": "hard", "bloom": "Create (L6)" }
+      ]
+    }
+  ]
+}

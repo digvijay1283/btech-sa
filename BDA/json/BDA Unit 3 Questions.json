@@ -1,0 +1,121 @@
+{
+  "subject": "Big Data Analytics (BDA)",
+  "unit": 3,
+  "co_mapped": "CO3",
+  "sorting": "Topic-wise, then difficulty-wise (Easy -> Moderate -> Hard) as labelled in the question bank",
+  "total_questions": 36,
+  "summary": {
+    "theory_questions": 27,
+    "numericals": 9
+  },
+  "theory": [
+    {
+      "topic": "1. Bayesian Modeling (Priors, MCMC, Sparsity, Kernels)",
+      "questions": [
+        { "id": "Q3",  "difficulty": "Easy",     "bloom": "L2", "question": "Compare Bayesian modeling with frequentist statistics in terms of handling uncertainty." },
+        { "id": "Q6",  "difficulty": "Easy",     "bloom": "L4", "question": "Justify the selection of different kernel functions in Bayesian modeling for regression problems." },
+        { "id": "Q9",  "difficulty": "Moderate", "bloom": "L4", "question": "Analyze the role of Markov Chain Monte Carlo (MCMC) methods in Bayesian inference." },
+        { "id": "Q12", "difficulty": "Moderate", "bloom": "L4", "question": "Analyze the impact of data sparsity in Bayesian modeling and suggest suitable methods to handle it." },
+        { "id": "Q20", "difficulty": "Moderate", "bloom": "L5", "question": "Critically assess the impact of priors in Bayesian modeling and discuss how to choose appropriate priors." },
+        { "id": "Q36", "difficulty": "Hard",     "bloom": "L6", "question": "A researcher is developing a Bayesian predictive model for a high-dimensional dataset with correlated features and limited observations. Design a suitable modeling approach by selecting appropriate priors, addressing data sparsity, and recommending an inference method. Justify the design choices." }
+      ]
+    },
+    {
+      "topic": "2. Bayesian Networks",
+      "questions": [
+        { "id": "Q5",  "difficulty": "Easy",     "bloom": "L2", "question": "Compare different types of Bayesian Networks and their applications in decision-making." },
+        { "id": "Q23", "difficulty": "Moderate", "bloom": "L3", "question": "Design a simple Bayesian Network to predict whether a patient has a disease based on symptoms and test results." }
+      ]
+    },
+    {
+      "topic": "3. Time Series Analysis (Linear vs Nonlinear Dynamics)",
+      "questions": [
+        { "id": "Q2",  "difficulty": "Easy",     "bloom": "L2", "question": "Differentiate between linear and nonlinear time series analysis with real-world examples." },
+        { "id": "Q10", "difficulty": "Moderate", "bloom": "L4", "question": "Analyze the strengths and weaknesses of neural networks for time series forecasting compared with traditional statistical models." },
+        { "id": "Q18", "difficulty": "Moderate", "bloom": "L4", "question": "Analyze whether nonlinear dynamics can provide more accurate insights into stock market trends than traditional linear methods. Justify your answer." },
+        { "id": "Q21", "difficulty": "Moderate", "bloom": "L4", "question": "Discuss the limitations of linear time series models and explain why nonlinear models may be more suitable for modeling stock market volatility. Also, differentiate between AR and MA models." },
+        { "id": "Q35", "difficulty": "Hard",     "bloom": "L5", "question": "A financial analyst wants to forecast stock market volatility using historical time series data. Compare linear time series models with nonlinear dynamics models, evaluate their suitability, and recommend an appropriate approach with justification." }
+      ]
+    },
+    {
+      "topic": "4. Competitive Learning & Self-Organizing Maps (SOM)",
+      "questions": [
+        { "id": "Q1",  "difficulty": "Easy",     "bloom": "L2", "question": "Discuss the competitive learning model for clustering customer segments in a retail dataset." },
+        { "id": "Q7",  "difficulty": "Easy",     "bloom": "L2", "question": "Discuss the concept of competitive learning in neural networks. How does it differ from supervised learning? Illustrate your answer with a real-world application." },
+        { "id": "Q17", "difficulty": "Moderate", "bloom": "L4", "question": "Critically analyze the role of competitive learning in self-organizing maps and suggest improvements." },
+        { "id": "Q34", "difficulty": "Hard",     "bloom": "L6", "question": "A retail company wants to segment its customers using annual income and spending score. Design a competitive learning-based clustering model, explain the weight-update process, and evaluate the quality of the resulting customer segments." }
+      ]
+    },
+    {
+      "topic": "5. Neural Networks (Backpropagation, Evaluation, Generalization)",
+      "questions": [
+        { "id": "Q13", "difficulty": "Moderate", "bloom": "L5", "question": "Evaluate the performance of a neural network-based classifier and suggest improvements using cross-validation." },
+        { "id": "Q27", "difficulty": "Moderate", "bloom": "L3", "question": "Train a neural network using the backpropagation algorithm and explain how generalization is achieved on unseen data." }
+      ]
+    },
+    {
+      "topic": "6. Rule Induction (Rule-based Learning, RIPPER, PART)",
+      "questions": [
+        { "id": "Q11", "difficulty": "Moderate", "bloom": "L5", "question": "Evaluate the trade-offs between rule-based learning and neural networks for pattern recognition." },
+        { "id": "Q29", "difficulty": "Hard",     "bloom": "L3", "question": "A bank wants to develop a fraud detection system that classifies transactions as fraudulent or legitimate based on historical transaction data. Using the RIPPER rule induction algorithm, extract decision rules based on transaction amount, location, time, and user behavior.", "note": "No dataset given - answer will use a small assumed dataset" },
+        { "id": "Q31", "difficulty": "Hard",     "bloom": "L3", "question": "A telecom company wants to predict customer churn based on call duration, internet usage, customer service interactions, and billing issues. Apply the PART rule induction algorithm to generate rules that distinguish between customers who will churn and those who will stay.", "note": "No dataset given - answer will use a small assumed dataset" }
+      ]
+    },
+    {
+      "topic": "7. Decision Trees (ID3)",
+      "questions": [
+        { "id": "Q8",  "difficulty": "Easy",     "bloom": "L2", "question": "Briefly explain how the ID3 algorithm proceeds after selecting the root node of a decision tree." }
+      ]
+    },
+    {
+      "topic": "8. Stochastic Search Methods",
+      "questions": [
+        { "id": "Q4",  "difficulty": "Easy",     "bloom": "L2", "question": "Discuss the importance of stochastic search methods in solving high-dimensional optimization problems." },
+        { "id": "Q16", "difficulty": "Moderate", "bloom": "L5", "question": "Assess the impact of overfitting in stochastic search methods and propose strategies to mitigate it." }
+      ]
+    },
+    {
+      "topic": "9. Principal Component Analysis (PCA) - Theory",
+      "questions": [
+        { "id": "Q19", "difficulty": "Moderate", "bloom": "L5", "question": "Evaluate the effectiveness of PCA in high-dimensional datasets where features have strong correlations." },
+        { "id": "Q24", "difficulty": "Moderate", "bloom": "L3", "question": "A company collects customer data using two features: annual income (X1) and spending score (X2). Explain how PCA can be applied to reduce the dimensionality of the dataset. Identify the steps required to calculate the covariance matrix, eigenvalues, eigenvectors, and principal components." }
+      ]
+    }
+  ],
+  "numericals": [
+    {
+      "topic": "A. Bayes' Theorem",
+      "questions": [
+        { "id": "Q22", "difficulty": "Moderate", "bloom": "L3", "question": "Email spam classification: P(S)=0.3, P(not S)=0.7, P(D|S)=0.8, P(D|not S)=0.2. Calculate the probability that an email containing the word 'discount' is spam using Bayes' theorem.", "effort": "Short (1 formula)" }
+      ]
+    },
+    {
+      "topic": "B. Association Rules (Support, Confidence, Apriori)",
+      "questions": [
+        { "id": "Q14", "difficulty": "Moderate", "bloom": "L5", "question": "Calculate the support and confidence of the rule 'Laptop -> Mouse' from: T1 (Laptop, Mouse), T2 (Laptop, Keyboard), T3 (Laptop, Mouse, Keyboard), T4 (Mouse, Keyboard).", "effort": "Short" },
+        { "id": "Q15", "difficulty": "Moderate", "bloom": "L5", "question": "Apply the Apriori algorithm to a small supermarket transaction dataset to identify frequent itemsets using a minimum support threshold of 50%.", "effort": "Medium", "note": "No dataset given - can reuse the Q30 dataset" },
+        { "id": "Q30", "difficulty": "Hard",     "bloom": "L3", "question": "Apply Apriori with min support 40% and min confidence 60% to: T1 (Bread, Milk), T2 (Bread, Butter), T3 (Bread, Milk, Butter), T4 (Milk, Butter), T5 (Bread, Milk). Find frequent itemsets and generate association rules.", "effort": "Long" }
+      ]
+    },
+    {
+      "topic": "C. Decision Tree (C4.5)",
+      "questions": [
+        { "id": "Q25", "difficulty": "Moderate", "bloom": "L3", "question": "Predict whether a customer will buy a laptop based on age, student status, and credit rating. Construct a decision tree using the C4.5 algorithm for the supplied dataset.", "effort": "Long", "note": "Dataset not included in QB - likely the standard 14-row 'buys_computer' dataset; confirm with your notes" }
+      ]
+    },
+    {
+      "topic": "D. PCA",
+      "questions": [
+        { "id": "Q26", "difficulty": "Moderate", "bloom": "L3", "question": "Dataset: A(2.5, 2.4), B(0.5, 0.7), C(2.2, 2.9), D(1.9, 2.2), E(3.1, 3.0). Calculate the covariance matrix, eigenvalues and eigenvectors, identify the first principal component, and project the data onto it (reduce to 1D).", "effort": "Long" }
+      ]
+    },
+    {
+      "topic": "E. Agglomerative Hierarchical Clustering",
+      "questions": [
+        { "id": "Q28", "difficulty": "Moderate", "bloom": "L5", "question": "Complete Linkage on students: S1(2,3), S2(3,4), S3(4,2), S4(8,8), S5(9,7). Compute Euclidean distances, inter-cluster distances, merge step by step, and draw the dendrogram.", "effort": "Long" },
+        { "id": "Q32", "difficulty": "Hard",     "bloom": "L3", "question": "Single Linkage on outlets: A(1,1), B(2,2), C(3,1), D(8,8), E(9,8). Compute Euclidean distances, merge closest clusters step by step, and construct the dendrogram.", "effort": "Long" },
+        { "id": "Q33", "difficulty": "Hard",     "bloom": "L3", "question": "Single Linkage on healthcare centers: H1(1,2), H2(2,3), H3(3,2), H4(7,8), H5(8,9). Compute Euclidean distances, inter-cluster distances, and merge step by step into a single cluster.", "effort": "Long" }
+      ]
+    }
+  ]
+}
