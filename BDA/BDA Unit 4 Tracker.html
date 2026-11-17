@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BDA Unit 4 Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<style>
+  :root{
+    --bg:#f7f7f5; --card:#ffffff; --ink:#1c1c1e; --muted:#6b6b70; --line:#e7e7e3;
+    --accent:#2f6b4f; --accent-soft:#e6f0ea; --rev:#b7791f; --rev-soft:#fbf1df;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+  .wrap{max-width:860px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:26px;margin:0 0 4px;letter-spacing:-.02em}
+  header p{margin:0;color:var(--muted);font-size:14px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 10px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+  .stat b{display:block;font-size:22px;letter-spacing:-.02em}
+  .stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 18px}
+  .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
+  .chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 13px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .search{flex:1;min-width:160px;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font:inherit;font-size:13px;background:var(--card)}
+  .search:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  section h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:28px 0 10px;display:flex;justify-content:space-between;gap:12px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;transition:border-color .2s}
+  .q.done{border-color:#cfe2d6}
+  .q.rev{border-color:#f0d9b0}
+  .qhead{display:flex;gap:12px;align-items:flex-start;padding:12px 14px}
+  .num{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);min-width:28px;padding-top:2px}
+  .qtext{flex:1;cursor:pointer}
+  .q.done .qtext{color:var(--muted)}
+  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:99px;margin-left:6px;vertical-align:1px}
+  .tag.has{background:var(--accent-soft);color:var(--accent)}
+  .tag.soon{background:#f0f0ec;color:var(--muted)}
+  .tag.mine{background:#eef0fb;color:#3d4aa8}
+  .meta{margin-top:5px;display:flex;gap:6px;flex-wrap:wrap}
+  .meta .tag{margin-left:0}
+  .tag.Easy{background:#e6f0ea;color:#2f6b4f}
+  .tag.Moderate{background:#fbf1df;color:#8a5a12}
+  .tag.Hard{background:#f3e8f7;color:#7a3a93}
+  .tag.num{background:#e4f0fa;color:#1d5f8f}
+  .qnote{margin-top:8px;font-size:12.5px;background:var(--rev-soft);border-radius:8px;padding:6px 10px;color:#6b4a10}
+  .acts{display:flex;gap:6px;flex-shrink:0}
+  .btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--muted);transition:all .15s}
+  .btn:hover{border-color:#cfcfca}
+  .btn.d.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.r.on{background:var(--rev);border-color:var(--rev);color:#fff}
+  .btn svg{width:16px;height:16px}
+  .ans{display:none;padding:2px 18px 16px 54px;font-size:14.5px;border-top:1px solid var(--line)}
+  .q.open .ans{display:block}
+  .ans h1,.ans h2,.ans h3,.ans h4{font-size:14.5px;margin:14px 0 6px;text-transform:none;letter-spacing:0;color:var(--ink);display:block}
+  .ans ul,.ans ol{padding-left:20px;margin:6px 0}
+  .ans table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0;display:block;overflow-x:auto}
+  .ans th,.ans td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+  .ans th{background:#fafaf8}
+  .ans pre{background:#fafaf8;border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto;font-family:"JetBrains Mono",monospace;font-size:12px}
+  .ans code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#f3f3ef;padding:1px 5px;border-radius:5px}
+  .ans pre code{background:none;padding:0}
+  .ans blockquote{background:var(--accent-soft);border-radius:10px;padding:9px 12px;margin:10px 0 0;border:none}
+  .ans blockquote p{margin:0}
+  .legend{font-size:12px;color:var(--muted);margin-top:6px}
+  .reset{margin-left:auto;background:none;border:none;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;text-decoration:underline}
+  .confirm{display:none;font-size:12px;gap:6px;align-items:center}
+  .confirm.show{display:flex}
+  .empty{color:var(--muted);text-align:center;padding:30px;display:none}
+  .delans{background:none;border:none;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;text-decoration:underline;margin-top:12px;padding:0}
+  .toolbar{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+  .tbtn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 14px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;color:var(--ink);display:flex;gap:6px;align-items:center}
+  .tbtn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .tbtn:hover{filter:brightness(.97)}
+  .overlay{position:fixed;inset:0;background:rgba(20,20,20,.28);display:none;align-items:flex-start;justify-content:center;z-index:20;padding:40px 14px;overflow-y:auto}
+  .overlay.show{display:flex}
+  .modal{background:var(--card);border-radius:18px;max-width:640px;width:100%;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.12)}
+  .modal h3{margin:0 0 4px;font-size:18px}
+  .modal p{margin:0 0 12px;color:var(--muted);font-size:13.5px}
+  .modal textarea{width:100%;min-height:220px;border:1px solid var(--line);border-radius:12px;padding:12px;font-family:"JetBrains Mono",monospace;font-size:12px;resize:vertical;background:#fcfcfa}
+  .modal textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  .mrow{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+  .msg{font-size:13px;margin-top:10px;padding:8px 12px;border-radius:10px;display:none}
+  .msg.ok{display:block;background:var(--accent-soft);color:var(--accent)}
+  .msg.err{display:block;background:#fdeaea;color:#a33}
+  .fmt{font-size:12px;background:#fafaf8;border:1px solid var(--line);border-radius:10px;padding:10px;margin:0 0 12px;white-space:pre-wrap;font-family:"JetBrains Mono",monospace;color:var(--muted)}
+  .tabs{display:flex;gap:4px;margin:18px 0 0;border-bottom:1px solid var(--line)}
+  .tab{background:none;border:none;font:inherit;font-size:14px;font-weight:500;color:var(--muted);padding:9px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--ink);border-bottom-color:var(--accent)}
+  #viewGuide{display:none}
+  .guide .gcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin:14px 0}
+  .guide h3{margin:0 0 8px;font-size:16px}
+  .guide h4{margin:14px 0 4px;font-size:14px}
+  .guide p{margin:6px 0;font-size:14px}
+  .guide ul,.guide ol{padding-left:20px;margin:6px 0;font-size:14px}
+  .guide li{margin:3px 0}
+  .guide pre{background:#fafaf8;border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto;font-family:"JetBrains Mono",monospace;font-size:12px;margin:8px 0;white-space:pre-wrap}
+  .guide code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#f3f3ef;padding:1px 5px;border-radius:5px}
+  .guide table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0;display:block;overflow-x:auto}
+  .guide th,.guide td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+  .guide th{background:#fafaf8}
+  .guide .note{background:var(--rev-soft);border-radius:10px;padding:9px 12px;margin:10px 0 0;font-size:13.5px}
+  .guide .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+  .guide .count{font-size:13px;color:var(--muted)}
+  .loader{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--rev);border-radius:var(--radius);padding:16px 18px;margin:22px 0;font-size:14px;display:none}
+  .loader.show{display:block}
+  .loader h3{margin:0 0 6px;font-size:16px}
+  .loader p{margin:6px 0}
+  .loader pre{background:#fafaf8;border:1px solid var(--line);border-radius:10px;padding:10px;font-family:"JetBrains Mono",monospace;font-size:12px;overflow-x:auto;margin:8px 0}
+  .loader code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#f3f3ef;padding:1px 5px;border-radius:5px}
+  @media (max-width:560px){
+    .wrap{padding:22px 12px 60px}
+    .ans{padding:2px 14px 14px 14px}
+    .stat b{font-size:19px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="title">BDA · Unit 4</h1>
+    <p id="subtitle">Loading questions…</p>
+  </header>
+
+  <!-- shown only when json/BDA Unit 4 Questions.json can't be fetched (e.g. page opened by double-click) -->
+  <div class="loader" id="loader">
+    <h3>Couldn't load the questions file</h3>
+    <p>This page reads <code>json/BDA Unit 4 Questions.json</code>. Browsers block that when a page is opened straight from the file system. Pick one:</p>
+    <p><b>Option 1.</b> Choose the file once. It is remembered in this browser afterwards.</p>
+    <div class="toolbar"><button class="tbtn primary" id="pickQ">📄 Choose Questions.json</button></div>
+    <input type="file" id="qFile" accept=".json,application/json" style="display:none">
+    <p><b>Option 2.</b> Serve the folder. In a terminal inside the <code>BDA</code> folder run:</p>
+    <pre>python -m http.server 8000</pre>
+    <p>then open <code>http://localhost:8000/BDA%20Unit%204%20Tracker.html</code>.</p>
+    <div class="msg" id="loadMsg"></div>
+  </div>
+
+  <div id="app" style="display:none">
+  <nav class="tabs" role="tablist">
+    <button class="tab on" data-tab="viewTracker" role="tab">Tracker</button>
+    <button class="tab" data-tab="viewGuide" role="tab">How to use</button>
+  </nav>
+
+  <div id="viewTracker">
+  <div class="stats">
+    <div class="stat"><b id="sDone">0</b><span>Completed</span></div>
+    <div class="stat"><b id="sRev">0</b><span>Need revision</span></div>
+    <div class="stat"><b id="sLeft">0</b><span>Remaining</span></div>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+
+  <div class="toolbar">
+    <button class="tbtn primary" id="openImport">＋ Add answers (JSON)</button>
+    <button class="tbtn" id="openBackup">Backup / restore</button>
+    <button class="tbtn" id="dlToolbar">⬇ Download all answers (JSON)</button>
+  </div>
+
+  <div class="overlay" id="importBox"><div class="modal">
+    <h3>Add answers</h3>
+    <p>Paste the JSON Claude gives you. A single answer or a whole topic both work. If a question already has an answer, the new one replaces it.</p>
+    <div class="fmt">{ "answers": [
+  { "q": 1, "answer": "markdown text…" },
+  { "q": 2, "answer": "…" }
+] }</div>
+    <textarea id="importText" placeholder="Paste JSON here…"></textarea>
+    <div class="msg" id="importMsg"></div>
+    <input type="file" id="importFile" accept=".json,application/json" multiple style="display:none">
+    <div class="mrow">
+      <button class="tbtn" data-close="importBox">Close</button>
+      <button class="tbtn" id="pickFile">📄 Choose .json file(s)</button>
+      <button class="tbtn primary" id="doImport">Add to page</button>
+    </div>
+  </div></div>
+
+  <div class="overlay" id="backupBox"><div class="modal">
+    <h3>Backup / restore</h3>
+    <p>Your answers and marks are saved only in this browser. Copy the backup and keep it somewhere safe, for example in a notes app. To restore it on another device or browser, paste it here.</p>
+    <textarea id="backupText" placeholder="Paste a backup here to restore…"></textarea>
+    <div class="msg" id="backupMsg"></div>
+    <div class="mrow">
+      <button class="tbtn" data-close="backupBox">Close</button>
+      <button class="tbtn" id="copyBackup">Copy backup</button>
+      <button class="tbtn primary" id="doRestore">Restore</button>
+    </div>
+  </div></div>
+
+  <div class="controls">
+    <button class="chip on" data-f="all">All</button>
+    <button class="chip" data-f="pending">Pending</button>
+    <button class="chip" data-f="done">Completed</button>
+    <button class="chip" data-f="rev">Revise</button>
+    <button class="chip" data-f="Easy">Easy</button>
+    <button class="chip" data-f="Moderate">Moderate</button>
+    <button class="chip" data-f="Hard">Hard</button>
+    <button class="chip" data-f="num">Numericals</button>
+    <input class="search" id="search" placeholder="Search questions…">
+  </div>
+  <div class="legend">Tap a question to open its answer. ✓ marks it completed, ↻ marks it for revision.
+    <span style="float:right">
+      <button class="reset" id="resetBtn">Reset progress</button>
+      <span class="confirm" id="confirmBox">Clear all marks? <button class="chip" id="yesReset">Yes</button><button class="chip" id="noReset">No</button></span>
+    </span>
+  </div>
+
+  <div id="list"></div>
+  <div class="empty" id="empty">No questions match this filter.</div>
+  </div><!-- /viewTracker -->
+
+  <div id="viewGuide" class="guide">
+
+    <div class="gcard">
+      <h3>1. Using the tracker</h3>
+      <ul>
+        <li><b>Tap a question</b> to open or close its answer. Questions tagged <i>no answer yet</i> have nothing to open.</li>
+        <li><b>✓</b> marks a question <b>Completed</b>. <b>↻</b> marks it <b>Needs revision</b>. The counters and progress bar update at once.</li>
+        <li>Use the chips <b>All / Pending / Completed / Revise / Easy / Moderate / Hard / Numericals</b> to filter, and the search box to find a question by words or number (e.g. <code>25</code>).</li>
+        <li><b>Reset progress</b> (under the filters) clears only your ✓/↻ marks. Your answers stay.</li>
+        <li>A question with an amber note has a problem in the question bank itself (Q24 is missing its hash functions).</li>
+      </ul>
+      <div class="note">Everything is saved <b>only in this browser on this device</b>. Use <b>Backup / restore</b> to move your marks and answers across.</div>
+    </div>
+
+    <div class="gcard">
+      <h3>2. Where the questions come from</h3>
+      <p>The questions are not written into this page. They are read from <code>json/BDA Unit 4 Questions.json</code>, so to fix or add a question you only edit that file and refresh. Format:</p>
+      <pre>{
+  "chapter": "Unit 4 - Mining Data Streams",
+  "topics": [
+    { "topic": "Topic name",
+      "questions": [ { "id": 1, "question": "…", "difficulty": "easy", "type": "numerical" } ] }
+  ]
+}</pre>
+      <p><code>difficulty</code> is <code>easy</code>, <code>medium</code> or <code>hard</code>. <code>id</code> must be unique across the whole file. <code>type</code> is optional: add <code>"type": "numerical"</code> to a question and it shows up under the <b>Numericals</b> filter.</p>
+    </div>
+
+    <div class="gcard">
+      <h3>3. Adding answers</h3>
+      <ol>
+        <li>On the <b>Tracker</b> tab, click <b>＋ Add answers (JSON)</b>.</li>
+        <li><b>Paste</b> the JSON into the box, or click <b>📄 Choose .json file(s)</b>.</li>
+        <li>Click <b>Add to page</b> for pasted JSON. Files are added as soon as you pick them.</li>
+      </ol>
+      <pre>{
+  "answers": [
+    { "q": 11, "answer": "### Flajolet-Martin\n- hash each element\n- track trailing zeros" }
+  ]
+}</pre>
+      <p><code>q</code> is the question id (see the numbers on the left of each question). <code>answer</code> is Markdown: headings, lists, tables, code blocks for ASCII diagrams, and <code>&gt; …</code> for the green example box. A wrapping <code>```json</code> fence is stripped. If any item is invalid, nothing is imported.</p>
+    </div>
+
+    <div class="gcard">
+      <h3>4. Getting answers from Claude in this format</h3>
+      <pre id="promptText">Give me answers for BDA Unit 4 (Mining Data Streams) Q__–Q__ in tracker JSON format: {"answers":[{"q":N,"answer":"&lt;markdown&gt;"}]}. Use headings, lists, tables and ASCII diagrams in code blocks. For numerical questions (Q25, Q26) show every hash value and the working step by step. End each answer with a "&gt; 🛒" example line using a stream of online-shopping clicks or payments.</pre>
+      <div class="row"><button class="tbtn" id="copyPrompt">Copy prompt</button><button class="tbtn" id="copyExample">Copy example JSON</button></div>
+    </div>
+
+    <div class="gcard">
+      <h3>5. Share your answers with friends</h3>
+      <p>This downloads one <code>.json</code> file with every answer currently on this page. Your ✓/↻ marks are not included. Your friend opens the same page, clicks <b>＋ Add answers (JSON)</b> and then <b>📄 Choose .json file(s)</b>.</p>
+      <div class="row">
+        <button class="tbtn primary" id="dlGuide">⬇ Download all answers (JSON)</button>
+        <span class="count" id="dlCount"></span>
+      </div>
+    </div>
+
+  </div><!-- /viewGuide -->
+  </div><!-- /app -->
+</div>
+
+<script>
+const DATA_URL = "json/BDA Unit 4 Questions.json";
+const KEY = "bda-u4-progress", AKEY = "bda-u4-answers", CKEY = "bda-u4-questions-cache";
+
+let topics = [];      // [{name, qs:[id,...]}]
+let Q = {};           // id -> question text
+let META = {};        // id -> {d: Easy|Moderate|Hard, n: note}
+let state = {}, mine = {};
+try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ state = {}; }
+try { mine = JSON.parse(localStorage.getItem(AKEY)) || {}; } catch(e){ mine = {}; }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); localStorage.setItem(AKEY, JSON.stringify(mine)); } catch(e){} };
+
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function md(text){
+  try {
+    if (window.marked && window.DOMPurify) return DOMPurify.sanitize(marked.parse(text, {gfm:true, breaks:false}));
+  } catch(e){}
+  return '<pre style="white-space:pre-wrap">'+esc(text)+'</pre>';
+}
+
+// ---------- loading the questions JSON ----------
+const LEVEL = {easy:"Easy", medium:"Moderate", moderate:"Moderate", hard:"Hard"};
+
+function buildFrom(data){
+  if (!data || !Array.isArray(data.topics)) throw new Error('Expected a "topics" list.');
+  const t = [], q = {}, m = {};
+  data.topics.forEach((tp, i)=>{
+    if (!tp.topic || !Array.isArray(tp.questions)) throw new Error("Topic " + (i+1) + " needs a name and a questions list.");
+    const ids = [];
+    tp.questions.forEach(it=>{
+      const id = parseInt(it.id, 10);
+      if (!Number.isInteger(id)) throw new Error('A question in "' + tp.topic + '" has no numeric id.');
+      if (q[id]) throw new Error("Duplicate question id " + id + ".");
+      if (typeof it.question !== "string" || !it.question.trim()) throw new Error("Q" + id + " has no question text.");
+      const lv = LEVEL[String(it.difficulty||"").toLowerCase()];
+      if (!lv) throw new Error("Q" + id + ' has an unknown difficulty "' + it.difficulty + '".');
+      q[id] = it.question;
+      m[id] = {d: lv, num: String(it.type||"").toLowerCase() === "numerical"};
+      if (/\[missing/i.test(it.question)) m[id].n = "Part of this question is missing from the question bank. Check the original paper or syllabus for the data it refers to.";
+      ids.push(id);
+    });
+    t.push({name: tp.topic, qs: ids});
+  });
+  if (!Object.keys(q).length) throw new Error("The file has no questions.");
+  return {chapter: data.chapter || "Unit 4", topics: t, Q: q, META: m};
+}
+
+async function loadData(){
+  try {
+    const r = await fetch(encodeURI(DATA_URL), {cache:"no-cache"});
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    buildFrom(data);                                   // validate before trusting/caching
+    try { localStorage.setItem(CKEY, JSON.stringify(data)); } catch(e){}
+    return data;
+  } catch(e){}
+  try { const c = localStorage.getItem(CKEY); if (c) { const d = JSON.parse(c); buildFrom(d); return d; } } catch(e){}
+  return null;
+}
+
+function init(data){
+  const b = buildFrom(data);
+  topics = b.topics; Q = b.Q; META = b.META;
+  const total = Object.keys(Q).length;
+  const pretty = b.chapter.replace(/\s+-\s+/, ": ");
+  document.title = "BDA " + pretty;
+  title.textContent = "BDA · " + pretty;
+  subtitle.textContent = topics.length + " topics · " + total + " questions";
+  document.getElementById("loader").classList.remove("show");
+  document.getElementById("app").style.display = "";
+  render(); updateDlCount();
+}
+
+pickQ.onclick = ()=>{ qFile.value = ""; qFile.click(); };
+qFile.onchange = async ()=>{
+  const f = qFile.files[0]; if (!f) return;
+  try {
+    const data = JSON.parse(await f.text());
+    buildFrom(data);
+    try { localStorage.setItem(CKEY, JSON.stringify(data)); } catch(e){}
+    init(data);
+  } catch(e){ msg("loadMsg", "Couldn't read that file: " + e.message, false); }
+};
+
+// ---------- answers ----------
+function getAns(n){ return mine[n] ? md(mine[n]) : ""; }
+
+function parseAnswers(raw){
+  raw = raw.trim().replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/,"");
+  const data = JSON.parse(raw);
+  let list = Array.isArray(data) ? data : (data.answers || (data.q ? [data] : null));
+  if (!list) throw new Error("Couldn't find an \"answers\" list in the JSON.");
+  const ok = [];
+  list.forEach(it=>{
+    const n = parseInt(it.q ?? it.qno ?? it.id ?? it.question_no, 10);
+    if (!Q[n]) throw new Error("Question number " + (it.q ?? it.id ?? "?") + " is not in this unit.");
+    if (typeof it.answer !== "string" || !it.answer.trim()) throw new Error("Q" + n + " has an empty answer.");
+    ok.push([n, it.answer]);
+  });
+  return ok;
+}
+
+let filter = "all", query = "";
+const check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const loop = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15"/><path d="M4 20v-5h5"/></svg>';
+
+function tagFor(n){
+  return mine[n] ? '<span class="tag mine">your answer</span>' : '<span class="tag soon">no answer yet</span>';
+}
+
+function render(){
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  let shown = 0;
+  topics.forEach(t=>{
+    const items = t.qs.filter(n=>{
+      const s = state[n]||{};
+      if(filter==="done" && !s.d) return false;
+      if(filter==="rev" && !s.r) return false;
+      if(filter==="pending" && s.d) return false;
+      if(["Easy","Moderate","Hard"].includes(filter) && META[n].d!==filter) return false;
+      if(filter==="num" && !META[n].num) return false;
+      if(query && !(Q[n].toLowerCase().includes(query) || String(n)===query)) return false;
+      return true;
+    });
+    if(!items.length) return;
+    const doneCount = t.qs.filter(n=>(state[n]||{}).d).length;
+    const sec = document.createElement("section");
+    sec.innerHTML = `<h2><span>${esc(t.name)}</span><span>${doneCount}/${t.qs.length}</span></h2>`;
+    items.forEach(n=>{
+      shown++;
+      const s = state[n]||{};
+      const ans = getAns(n);
+      const el = document.createElement("div");
+      el.className = "q" + (s.d?" done":"") + (s.r?" rev":"");
+      el.innerHTML = `<div class="qhead">
+        <div class="num">Q${n}</div>
+        <div class="qtext">${esc(Q[n])}${tagFor(n)}
+          <div class="meta"><span class="tag ${META[n].d}">${META[n].d}</span>${META[n].num?'<span class="tag num">Numerical</span>':""}</div>${META[n].n?`<div class="qnote">${esc(META[n].n)}</div>`:""}</div>
+        <div class="acts">
+          <button class="btn d ${s.d?"on":""}" title="Mark completed" aria-label="Mark completed">${check}</button>
+          <button class="btn r ${s.r?"on":""}" title="Needs revision" aria-label="Needs revision">${loop}</button>
+        </div></div>
+        ${ans?`<div class="ans">${ans}<button class="delans">Remove this added answer</button></div>`:""}`;
+      el.querySelector(".qtext").onclick = ()=>{ if(ans) el.classList.toggle("open"); };
+      const del = el.querySelector(".delans");
+      if (del) del.onclick = ()=>{
+        if (del.dataset.sure){ delete mine[n]; save(); render(); updateDlCount(); }
+        else { del.dataset.sure = 1; del.textContent = "Click again to confirm removal"; }
+      };
+      el.querySelector(".btn.d").onclick = ()=>{ toggle(n,"d"); };
+      el.querySelector(".btn.r").onclick = ()=>{ toggle(n,"r"); };
+      sec.appendChild(el);
+    });
+    list.appendChild(sec);
+  });
+  document.getElementById("empty").style.display = shown? "none":"block";
+  stats();
+}
+function toggle(n,k){
+  const open = [...document.querySelectorAll(".q.open .num")].map(e=>e.textContent);
+  state[n] = state[n]||{}; state[n][k] = !state[n][k]; save(); render();
+  document.querySelectorAll(".q").forEach(q=>{ if(open.includes(q.querySelector(".num").textContent)) q.classList.add("open"); });
+}
+function stats(){
+  const ids = Object.keys(Q);
+  const all = ids.length;
+  const d = ids.filter(n=>(state[n]||{}).d).length;
+  const r = ids.filter(n=>(state[n]||{}).r).length;
+  sDone.textContent = d; sRev.textContent = r; sLeft.textContent = all-d;
+  prog.style.width = (all ? d/all*100 : 0)+"%";
+}
+document.querySelectorAll(".chip[data-f]").forEach(c=>c.onclick=()=>{
+  document.querySelectorAll(".chip[data-f]").forEach(x=>x.classList.remove("on"));
+  c.classList.add("on"); filter=c.dataset.f; render();
+});
+document.getElementById("search").oninput = e=>{ query=e.target.value.trim().toLowerCase(); render(); };
+resetBtn.onclick = ()=>{ resetBtn.style.display="none"; confirmBox.classList.add("show"); };
+noReset.onclick = ()=>{ resetBtn.style.display=""; confirmBox.classList.remove("show"); };
+yesReset.onclick = ()=>{ state={}; save(); noReset.onclick(); render(); };
+
+// modals
+const show = id => document.getElementById(id).classList.add("show");
+const hide = id => document.getElementById(id).classList.remove("show");
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>hide(b.dataset.close));
+document.querySelectorAll(".overlay").forEach(o=>o.onclick=e=>{ if(e.target===o) o.classList.remove("show"); });
+function msg(id, text, ok){ const m=document.getElementById(id); m.className="msg "+(ok?"ok":"err"); m.textContent=text; }
+
+openImport.onclick = ()=>{ importMsg.className="msg"; show("importBox"); importText.focus(); };
+doImport.onclick = ()=>{
+  try {
+    const items = parseAnswers(importText.value);
+    items.forEach(([n,a])=>{ mine[n]=a; });
+    save(); render();
+    msg("importMsg", "Added " + items.length + " answer" + (items.length>1?"s":"") + ": Q" + items.map(i=>i[0]).join(", Q"), true);
+    importText.value = "";
+    updateDlCount();
+  } catch(e){ msg("importMsg", "Couldn't read that: " + e.message, false); }
+};
+
+// import from .json file(s): all-or-nothing, same rules as pasted JSON
+pickFile.onclick = ()=>{ importFile.value = ""; importFile.click(); };
+importFile.onchange = async ()=>{
+  const files = [...importFile.files];
+  if(!files.length) return;
+  try {
+    const items = [];
+    for(const f of files){
+      try { items.push(...parseAnswers(await f.text())); }
+      catch(e){ throw new Error(f.name + ": " + e.message); }
+    }
+    items.forEach(([n,a])=>{ mine[n]=a; });
+    save(); render();
+    const nums = [...new Set(items.map(i=>i[0]))].sort((a,b)=>a-b);
+    msg("importMsg", "Added " + nums.length + " answer" + (nums.length>1?"s":"") + " from " + files.length + " file" + (files.length>1?"s":"") + ": Q" + nums.join(", Q"), true);
+    updateDlCount();
+  } catch(e){ msg("importMsg", "Couldn't read that: " + e.message, false); }
+  importFile.value = "";
+};
+
+// tabs
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on", x===t));
+  viewTracker.style.display = t.dataset.tab==="viewTracker" ? "" : "none";
+  viewGuide.style.display   = t.dataset.tab==="viewGuide"   ? "block" : "none";
+  if(t.dataset.tab==="viewGuide") updateDlCount();
+  window.scrollTo(0,0);
+});
+
+// export every answer on the page in the import format
+function buildExport(){
+  const answers = [];
+  Object.keys(Q).map(Number).sort((a,b)=>a-b).forEach(n=>{ if(mine[n]) answers.push({q:n, answer:mine[n]}); });
+  return {subject:"BDA", unit:4, answers};
+}
+function updateDlCount(){
+  const c = buildExport().answers.length;
+  dlCount.textContent = c + " answer" + (c===1?"":"s") + " ready to download";
+}
+function downloadAnswers(){
+  const data = buildExport();
+  if(!data.answers.length){ alert("There are no answers to download yet."); return; }
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "bda-unit4-answers.json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+dlToolbar.onclick = downloadAnswers;
+dlGuide.onclick = downloadAnswers;
+
+// copy helpers for the guide
+async function copyText(text, btn){
+  const old = btn.textContent;
+  try { await navigator.clipboard.writeText(text); btn.textContent = "Copied ✓"; }
+  catch(e){ btn.textContent = "Copy blocked: select the text manually"; }
+  setTimeout(()=>{ btn.textContent = old; }, 1800);
+}
+copyPrompt.onclick = ()=>copyText(promptText.textContent, copyPrompt);
+copyExample.onclick = ()=>copyText(JSON.stringify({answers:[{q:11, answer:"### Flajolet-Martin\n- Hash every element\n- Track the longest run of trailing zeros R\n- Estimate = 2^R\n\n> 🛒 Example: counting distinct shoppers in a sale-day click stream."}]}, null, 2), copyExample);
+
+openBackup.onclick = ()=>{ backupMsg.className="msg"; backupText.value=""; show("backupBox"); };
+copyBackup.onclick = async ()=>{
+  const data = JSON.stringify({bda_unit4_backup:1, progress:state, answers:mine});
+  try { await navigator.clipboard.writeText(data); msg("backupMsg","Backup copied. Paste it somewhere safe.",true); }
+  catch(e){ backupText.value = data; backupText.select(); msg("backupMsg","Copying was blocked here, so the backup is shown in the box above. Select it and copy it manually.",false); }
+};
+doRestore.onclick = ()=>{
+  try {
+    const d = JSON.parse(backupText.value.trim());
+    if(!d.bda_unit4_backup) throw new Error("This doesn't look like a Unit 4 tracker backup.");
+    state = d.progress||{}; mine = d.answers||{}; save(); render(); updateDlCount();
+    msg("backupMsg","Restored your answers and marks.",true);
+  } catch(e){ msg("backupMsg","Couldn't restore: " + e.message, false); }
+};
+
+// start
+loadData().then(data=>{
+  if (data) init(data);
+  else { subtitle.textContent = "Questions not loaded yet"; document.getElementById("loader").classList.add("show"); }
+});
+</script>
+</body>
+</html>

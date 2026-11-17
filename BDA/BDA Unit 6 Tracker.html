@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BDA Unit 6 Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<style>
+  :root{
+    --bg:#f7f7f5; --card:#ffffff; --ink:#1c1c1e; --muted:#6b6b70; --line:#e7e7e3;
+    --accent:#2f6b4f; --accent-soft:#e6f0ea; --rev:#b7791f; --rev-soft:#fbf1df;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.55}
+  .wrap{max-width:860px;margin:0 auto;padding:32px 18px 80px}
+  header h1{font-size:26px;margin:0 0 4px;letter-spacing:-.02em}
+  header p{margin:0;color:var(--muted);font-size:14px}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 10px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+  .stat b{display:block;font-size:22px;letter-spacing:-.02em}
+  .stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 18px}
+  .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
+  .chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 13px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink)}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .search{flex:1;min-width:160px;border:1px solid var(--line);border-radius:99px;padding:7px 14px;font:inherit;font-size:13px;background:var(--card)}
+  .search:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  .anchor{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);padding:14px 16px;margin:8px 0 6px;font-size:14px}
+  .anchor summary{cursor:pointer;font-weight:600}
+  .anchor ul{margin:8px 0 0;padding-left:18px}
+  section h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:28px 0 10px;display:flex;justify-content:space-between}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;transition:border-color .2s}
+  .q.done{border-color:#cfe2d6}
+  .q.rev{border-color:#f0d9b0}
+  .qhead{display:flex;gap:12px;align-items:flex-start;padding:12px 14px}
+  .num{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);min-width:28px;padding-top:2px}
+  .qtext{flex:1;cursor:pointer}
+  .q.done .qtext{color:var(--muted)}
+  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:99px;margin-left:6px;vertical-align:1px}
+  .tag.has{background:var(--accent-soft);color:var(--accent)}
+  .tag.soon{background:#f0f0ec;color:var(--muted)}
+  .acts{display:flex;gap:6px;flex-shrink:0}
+  .btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--muted);transition:all .15s}
+  .btn:hover{border-color:#cfcfca}
+  .btn.d.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.r.on{background:var(--rev);border-color:var(--rev);color:#fff}
+  .btn svg{width:16px;height:16px}
+  .ans{display:none;padding:2px 18px 16px 54px;font-size:14.5px;border-top:1px solid var(--line)}
+  .q.open .ans{display:block}
+  .ans h4{margin:14px 0 6px;font-size:14px}
+  .ans ul,.ans ol{padding-left:20px;margin:6px 0}
+  .ans table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0;display:block;overflow-x:auto}
+  .ans th,.ans td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+  .ans th{background:#fafaf8}
+  .ans pre{background:#fafaf8;border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto;font-family:"JetBrains Mono",monospace;font-size:12px}
+  .ex{background:var(--accent-soft);border-radius:10px;padding:9px 12px;margin-top:10px}
+  .quote{border-left:3px solid var(--line);padding-left:10px;color:var(--muted);font-style:italic}
+  .legend{font-size:12px;color:var(--muted);margin-top:6px}
+  .reset{margin-left:auto;background:none;border:none;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;text-decoration:underline}
+  .confirm{display:none;font-size:12px;gap:6px;align-items:center}
+  .confirm.show{display:flex}
+  .empty{color:var(--muted);text-align:center;padding:30px;display:none}
+  .ans blockquote{background:var(--accent-soft);border-radius:10px;padding:9px 12px;margin:10px 0 0;border:none}
+  .ans blockquote p{margin:0}
+  .ans code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#f3f3ef;padding:1px 5px;border-radius:5px}
+  .ans pre code{background:none;padding:0}
+  .ans h1,.ans h2,.ans h3{font-size:14.5px;margin:14px 0 6px;text-transform:none;letter-spacing:0;color:var(--ink);display:block}
+  .tag.mine{background:#eef0fb;color:#3d4aa8}
+  .meta{margin-top:5px;display:flex;gap:6px;flex-wrap:wrap}
+  .meta .tag{margin-left:0;font-size:11px}
+  .tag.Basic,.tag.Easy{background:#e6f0ea;color:#2f6b4f}
+  .tag.Moderate{background:#fbf1df;color:#8a5a12}
+  .tag.Hard{background:#f3e8f7;color:#7a3a93}
+  .tag.tool{background:#e4f0fa;color:#1d5f8f}
+  .tag.rel{background:#f0f0ec;color:var(--muted)}
+  .given{margin-top:8px;font-size:13px}
+  .given table{border-collapse:collapse;font-size:12.5px;margin:4px 0;display:block;overflow-x:auto}
+  .given th,.given td{border:1px solid var(--line);padding:4px 9px;text-align:left}
+  .given th{background:#fafaf8}
+  .given .gl{font-size:12px;color:var(--muted);margin-top:6px}
+  .qnote{margin-top:8px;font-size:12.5px;background:var(--rev-soft);border-radius:8px;padding:6px 10px;color:#6b4a10}
+  .tag.bloom{background:#f0f0ec;color:var(--muted)}
+  .tag.same{background:#eef0fb;color:#3d4aa8}
+  .toolbar{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+  .tbtn{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 14px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;color:var(--ink);display:flex;gap:6px;align-items:center}
+  .tbtn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .tbtn:hover{filter:brightness(.97)}
+  .overlay{position:fixed;inset:0;background:rgba(20,20,20,.28);display:none;align-items:flex-start;justify-content:center;z-index:20;padding:40px 14px;overflow-y:auto}
+  .overlay.show{display:flex}
+  .modal{background:var(--card);border-radius:18px;max-width:640px;width:100%;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.12)}
+  .modal h3{margin:0 0 4px;font-size:18px}
+  .modal p{margin:0 0 12px;color:var(--muted);font-size:13.5px}
+  .modal textarea{width:100%;min-height:220px;border:1px solid var(--line);border-radius:12px;padding:12px;font-family:"JetBrains Mono",monospace;font-size:12px;resize:vertical;background:#fcfcfa}
+  .modal textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  .mrow{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+  .msg{font-size:13px;margin-top:10px;padding:8px 12px;border-radius:10px;display:none}
+  .msg.ok{display:block;background:var(--accent-soft);color:var(--accent)}
+  .msg.err{display:block;background:#fdeaea;color:#a33}
+  .fmt{font-size:12px;background:#fafaf8;border:1px solid var(--line);border-radius:10px;padding:10px;margin:0 0 12px;white-space:pre-wrap;font-family:"JetBrains Mono",monospace;color:var(--muted)}
+  .delans{background:none;border:none;color:var(--muted);font:inherit;font-size:12px;cursor:pointer;text-decoration:underline;margin-top:12px;padding:0}
+  .tabs{display:flex;gap:4px;margin:18px 0 0;border-bottom:1px solid var(--line)}
+  .tab{background:none;border:none;font:inherit;font-size:14px;font-weight:500;color:var(--muted);padding:9px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--ink);border-bottom-color:var(--accent)}
+  #viewGuide{display:none}
+  .guide .gcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin:14px 0}
+  .guide h3{margin:0 0 8px;font-size:16px}
+  .guide h4{margin:14px 0 4px;font-size:14px}
+  .guide p{margin:6px 0;font-size:14px}
+  .guide ul,.guide ol{padding-left:20px;margin:6px 0;font-size:14px}
+  .guide li{margin:3px 0}
+  .guide pre{background:#fafaf8;border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto;font-family:"JetBrains Mono",monospace;font-size:12px;margin:8px 0;white-space:pre-wrap}
+  .guide code{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:#f3f3ef;padding:1px 5px;border-radius:5px}
+  .guide table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0;display:block;overflow-x:auto}
+  .guide th,.guide td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+  .guide th{background:#fafaf8}
+  .guide .note{background:var(--rev-soft);border-radius:10px;padding:9px 12px;margin:10px 0 0;font-size:13.5px}
+  .guide .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+  .guide .count{font-size:13px;color:var(--muted)}
+  @media (max-width:560px){
+    .wrap{padding:22px 12px 60px}
+    .ans{padding:2px 14px 14px 14px}
+    .stat b{font-size:19px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>BDA · Unit 6: Hadoop, NoSQL &amp; Cloud for Big Data</h1>
+    <p>Unstructured data, HDFS, MapReduce, Pig, Hive, HBase, Mahout, NoSQL &amp; cloud analytics · CO6 · 36 questions</p>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab on" data-tab="viewTracker" role="tab">Tracker</button>
+    <button class="tab" data-tab="viewGuide" role="tab">How to use</button>
+  </nav>
+
+  <div id="viewTracker">
+  <div class="stats">
+    <div class="stat"><b id="sDone">0</b><span>Completed</span></div>
+    <div class="stat"><b id="sRev">0</b><span>Need revision</span></div>
+    <div class="stat"><b id="sLeft">36</b><span>Remaining</span></div>
+  </div>
+  <div class="bar"><i id="prog"></i></div>
+
+  <details class="anchor">
+    <summary>🛒 Anchor example for this unit: the Pune online shopping app on sale day</summary>
+    <ul>
+      <li><b>Unstructured data:</b> product reviews, photos and support chats pile up next to the orders table.</li>
+      <li><b>HDFS:</b> stores the day's clickstream as replicated blocks across many machines. The NameNode knows where each block is.</li>
+      <li><b>MapReduce:</b> counts the words in a million reviews in parallel, then adds up the counts.</li>
+      <li><b>Pig and Hive:</b> let an analyst write a script or SQL-style query instead of Java.</li>
+      <li><b>HBase:</b> looks up one customer's latest cart in milliseconds. <b>Mahout</b> builds the recommender.</li>
+      <li><b>NoSQL:</b> key-value for carts, document for the product catalogue, column-family for order history, graph for "customers also bought".</li>
+      <li><b>Cloud:</b> adds servers for the sale and releases them afterwards, so the shop pays only for what it uses.</li>
+    </ul>
+  </details>
+
+  <div class="toolbar">
+    <button class="tbtn primary" id="openImport">＋ Add answers (JSON)</button>
+    <button class="tbtn" id="openBackup">Backup / restore</button>
+    <button class="tbtn" id="dlToolbar">⬇ Download all answers (JSON)</button>
+  </div>
+
+  <div class="overlay" id="importBox"><div class="modal">
+    <h3>Add answers</h3>
+    <p>Paste the JSON Claude gives you. A single answer or a whole topic both work. If a question already has an answer, the new one replaces it.</p>
+    <div class="fmt">{ "answers": [
+  { "q": 1, "answer": "markdown text…" },
+  { "q": 2, "answer": "…" }
+] }</div>
+    <textarea id="importText" placeholder="Paste JSON here…"></textarea>
+    <div class="msg" id="importMsg"></div>
+    <input type="file" id="importFile" accept=".json,application/json" multiple style="display:none">
+    <div class="mrow">
+      <button class="tbtn" data-close="importBox">Close</button>
+      <button class="tbtn" id="pickFile">📄 Choose .json file(s)</button>
+      <button class="tbtn primary" id="doImport">Add to page</button>
+    </div>
+  </div></div>
+
+  <div class="overlay" id="backupBox"><div class="modal">
+    <h3>Backup / restore</h3>
+    <p>Your answers and marks are saved only in this browser. Copy the backup and keep it somewhere safe, for example in a notes app. To restore it on another device or browser, paste it here.</p>
+    <textarea id="backupText" placeholder="Paste a backup here to restore…"></textarea>
+    <div class="msg" id="backupMsg"></div>
+    <div class="mrow">
+      <button class="tbtn" data-close="backupBox">Close</button>
+      <button class="tbtn" id="copyBackup">Copy backup</button>
+      <button class="tbtn primary" id="doRestore">Restore</button>
+    </div>
+  </div></div>
+
+  <div class="controls">
+    <button class="chip on" data-f="all">All</button>
+    <button class="chip" data-f="pending">Pending</button>
+    <button class="chip" data-f="done">Completed</button>
+    <button class="chip" data-f="rev">Revise</button>
+    <button class="chip" data-f="Easy">Easy</button>
+    <button class="chip" data-f="Moderate">Moderate</button>
+    <button class="chip" data-f="Hard">Hard</button>
+    <input class="search" id="search" placeholder="Search questions…">
+  </div>
+  <div class="legend">Tap a question to open its answer. ✓ marks it completed, ↻ marks it for revision.
+    <span style="float:right">
+      <button class="reset" id="resetBtn">Reset progress</button>
+      <span class="confirm" id="confirmBox">Clear all marks? <button class="chip" id="yesReset">Yes</button><button class="chip" id="noReset">No</button></span>
+    </span>
+  </div>
+
+  <div id="list"></div>
+  <div class="empty" id="empty">No questions match this filter.</div>
+  </div><!-- /viewTracker -->
+
+  <div id="viewGuide" class="guide">
+
+    <div class="gcard">
+      <h3>1. Using the tracker</h3>
+      <ul>
+        <li><b>Tap a question</b> to open or close its answer. Questions tagged <i>no answer yet</i> have nothing to open.</li>
+        <li><b>✓</b> marks a question <b>Completed</b>. <b>↻</b> marks it <b>Needs revision</b>. The counters and progress bar update at once.</li>
+        <li>Tags under each question show its <b>level</b> (Easy, Moderate, Hard), its <b>Bloom level</b>, and for the Hadoop tools questions the <b>tool</b> (Pig, Hive, HBase, Mahout).</li>
+        <li><b>Q7 and Q20 are the same question</b>, so they carry a <i>same answer as Q#</i> tag. Adding the answer to either one shows it on both.</li>
+        <li>Other overlaps carry a <i>related</i> tag and a short note, for example Q30 is Q5 and Q11 combined with a diagram. They are different questions, so they do <b>not</b> share an answer, but answering the big one first makes the small ones quick.</li>
+        <li>Use the chips <b>All / Pending / Completed / Revise / Easy / Moderate / Hard</b> to filter, and the search box to find a question by words or number (e.g. <code>30</code>).</li>
+        <li><b>Reset progress</b> (under the filters) clears only your ✓/↻ marks. Your answers stay.</li>
+      </ul>
+      <div class="note">Everything is saved <b>only in this browser on this device</b>. Opening the page on another device or from another link starts empty. Use <b>Backup / restore</b> to move your marks and answers across.</div>
+    </div>
+
+    <div class="gcard">
+      <h3>2. Adding answers</h3>
+      <ol>
+        <li>On the <b>Tracker</b> tab, click <b>＋ Add answers (JSON)</b>.</li>
+        <li><b>Paste</b> the JSON into the box, or click <b>📄 Choose .json file(s)</b> and pick one or more files.</li>
+        <li>Click <b>Add to page</b> for pasted JSON. Files are added as soon as you pick them.</li>
+      </ol>
+      <p>If a question already has an answer, the new one <b>replaces</b> it. If any item is invalid, <b>nothing</b> is imported and an error tells you why.</p>
+    </div>
+
+    <div class="gcard">
+      <h3>3. JSON format for answers</h3>
+      <pre>{
+  "answers": [
+    { "q": 1, "answer": "### HDFS roles\n- NameNode: metadata\n- DataNode: blocks" },
+    { "q": 2, "answer": "..." }
+  ]
+}</pre>
+      <p>These two shorter shapes also work:</p>
+      <pre>[ { "q": 1, "answer": "..." } ]
+
+{ "q": 1, "answer": "..." }</pre>
+      <h4>Rules</h4>
+      <ul>
+        <li><code>q</code> (or <code>qno</code> / <code>question_no</code>) is the question number, <b>1 to 36</b>.</li>
+        <li><code>answer</code> is a non-empty <b>string of Markdown</b>. Write line breaks as <code>\n</code> inside the string.</li>
+        <li>Extra fields such as <code>unit</code> or <code>topic</code> are ignored.</li>
+        <li>A wrapping <code>```json</code> fence around the JSON is stripped automatically.</li>
+      </ul>
+      <h4>Markdown that renders well in an answer</h4>
+      <table>
+        <tr><th>You write</th><th>You get</th></tr>
+        <tr><td><code>### Heading</code></td><td>A section heading</td></tr>
+        <tr><td><code>**bold**</code>, <code>*italic*</code>, <code>`code`</code></td><td>Bold, italic, inline code</td></tr>
+        <tr><td><code>1. item</code> / <code>- item</code></td><td>Numbered / bulleted lists (nesting works)</td></tr>
+        <tr><td><code>| a | b |</code> then <code>|---|---|</code></td><td>A table</td></tr>
+        <tr><td>Text between triple backticks</td><td>A code block, good for ASCII diagrams</td></tr>
+        <tr><td><code>&gt; 🛒 Example…</code></td><td>The green <b>example box</b></td></tr>
+      </table>
+    </div>
+
+    <div class="gcard">
+      <h3>4. Getting answers from Claude in this format</h3>
+      <p>Paste this prompt, change the question numbers, then paste the reply into <b>＋ Add answers</b>. For big batches, ask for a <code>.json</code> file and load it with <b>Choose .json file(s)</b>.</p>
+      <pre id="promptText">Give me answers for BDA Unit 6 Q__–Q__ in tracker JSON format: {"answers":[{"q":N,"answer":"&lt;markdown&gt;"}]}. Use headings, lists, tables, ASCII diagrams in code blocks, and end each answer with a "&gt; 🛒" example line using the online shopping app example. Where a question asks for a diagram (Hadoop ecosystem, HDFS, cloud architecture), draw it as ASCII in a code block. Q7 and Q20 are the same question, so answer only one of them.</pre>
+      <div class="row"><button class="tbtn" id="copyPrompt">Copy prompt</button><button class="tbtn" id="copyExample">Copy example JSON</button></div>
+    </div>
+
+    <div class="gcard">
+      <h3>5. Share your answers with friends</h3>
+      <p>This downloads one <code>.json</code> file with <b>every answer currently on this page</b>: the built-in ones plus any you added. Your ✓/↻ marks are <b>not</b> included.</p>
+      <div class="row">
+        <button class="tbtn primary" id="dlGuide">⬇ Download all answers (JSON)</button>
+        <span class="count" id="dlCount"></span>
+      </div>
+      <h4>Your friend then:</h4>
+      <ol>
+        <li>Opens this same page and clicks <b>＋ Add answers (JSON)</b>.</li>
+        <li>Clicks <b>📄 Choose .json file(s)</b> and selects your file.</li>
+        <li>Opens any question. The answers now show, tagged <i>your answer</i>.</li>
+      </ol>
+      <div class="note">Importing <b>replaces</b> any answer your friend already has for the same question. To move marks as well as answers between your own devices, use <b>Backup / restore</b> instead.</div>
+    </div>
+
+  </div><!-- /viewGuide -->
+</div>
+
+<script>
+const topics = [
+ {name:"Unstructured Data & Text Analytics", qs:[1, 2, 3, 9]},
+ {name:"Hadoop Fundamentals & Distributed Computing", qs:[6, 17, 28]},
+ {name:"HDFS (Hadoop Distributed File System)", qs:[5, 11, 30]},
+ {name:"MapReduce", qs:[4, 10, 31]},
+ {name:"Hadoop Ecosystem Tools (Pig, Hive, HBase, Mahout)", qs:[12, 13, 14, 16, 18, 36]},
+ {name:"NoSQL Databases", qs:[7, 19, 20]},
+ {name:"Cloud for Big Data: Services & Platforms", qs:[8, 15, 24, 26, 33]},
+ {name:"Cloud for Big Data: Architecture, Cost, Security & Integration", qs:[21, 22, 23, 25, 27, 29, 32, 34, 35]}
+];
+
+const Q = {
+1:"Classify unstructured data using suitable examples from social media posts, images, videos, and customer reviews.",
+2:"Illustrate the application of text analytics and sentiment analysis to extract useful insights from unstructured customer reviews.",
+3:"Analyze the challenges involved in processing large volumes of unstructured data from social media platforms.",
+4:"Apply the MapReduce programming model to process a large dataset and calculate the frequency of each word.",
+5:"Illustrate the roles of the NameNode and DataNode in storing and managing files in HDFS.",
+6:"Apply Apache Hadoop to process a large-scale dataset using distributed storage and parallel processing.",
+7:"Compare key-value, document, column-family, and graph NoSQL databases for selecting a suitable database for a Big Data application.",
+8:"Apply cloud computing services to design a scalable Big Data Analytics solution for processing large volumes of data.",
+9:"Compare structured and unstructured data in terms of storage, organization, and processing.",
+10:"Analyze the advantages and limitations of MapReduce for processing large datasets.",
+11:"Evaluate the impact of HDFS block replication on data reliability and fault tolerance.",
+12:"Examine how Apache Pig simplifies data processing in Hadoop.",
+13:"Assess the role of Apache Hive in data warehousing for Big Data applications.",
+14:"Illustrate the use of HBase for real-time data storage and retrieval with a suitable example.",
+15:"Illustrate how a cloud platform supports end-to-end Big Data analytics using a real-world example.",
+16:"Compare HBase and traditional relational databases in terms of scalability, data model, and flexibility.",
+17:"Analyze the impact of distributed computing on Big Data analytics.",
+18:"Discuss the role of Apache Mahout in implementing machine learning algorithms in Hadoop.",
+19:"Analyze the importance of NoSQL databases in Big Data applications.",
+20:"Compare key-value, document, column-family, and graph-based NoSQL databases with suitable applications.",
+21:"Assess how cloud-based analytics platforms improve the scalability of Big Data processing.",
+22:"Compare cloud-based data storage with on-premises storage in terms of cost, scalability, and accessibility.",
+23:"Analyze the impact of data security concerns in cloud-based analytics and recommend suitable safeguards.",
+24:"Compare IaaS, PaaS, and SaaS in terms of their support for Big Data analytics.",
+25:"Analyze the trade-offs between performance and cost in cloud-based Big Data architectures, using a suitable example.",
+26:"Compare AWS, Google Cloud Platform, and Microsoft Azure for Big Data analytics based on processing, storage, and scalability.",
+27:"Illustrate the data preprocessing steps performed in a cloud-based analytics platform.",
+28:"Illustrate the components of the Hadoop ecosystem using a suitable diagram and state their respective functions.",
+29:"Design an end-to-end cloud-based Big Data analytics architecture for an organization, identifying the roles of data storage, processing, analytics, APIs, and interfaces.",
+30:"Analyze how HDFS achieves fault tolerance, high throughput, and scalability. Support your answer with a suitable diagram.",
+31:"Evaluate the role and limitations of MapReduce in the era of streaming analytics and in-memory processing.",
+32:"Evaluate the challenges of integrating cloud-based Big Data solutions with on-premises infrastructure and recommend suitable integration strategies.",
+33:"A fast-growing e-commerce company processes terabytes of customer behavior, product interaction, and transaction data daily. Its local infrastructure cannot meet increasing storage and processing demands. Analyze how migrating to AWS, Microsoft Azure, or Google Cloud can improve scalability and processing efficiency. Recommend suitable cloud services and justify your selection.",
+34:"Compare batch processing and real-time processing in cloud-based analytics and recommend an appropriate architecture for an application requiring both historical analysis and immediate insights.",
+35:"Analyze how containerization and edge computing influence cloud-based Big Data processing, considering latency, resource utilization, and scalability.",
+36:"Analyze how Apache Mahout supports machine learning in Hadoop, considering its integration with other Hadoop ecosystem components, advantages, and limitations."
+};
+
+// level (d), Bloom (b), repeats sharing one answer (s), related questions (r), Hadoop tool (tl), note (n)
+const META = {"1":{"d":"Easy","b":"L2 · Understand","s":[],"r":[]},"2":{"d":"Easy","b":"L2 · Understand","s":[],"r":[]},"3":{"d":"Easy","b":"L4 · Analyze","s":[],"r":[]},"4":{"d":"Easy","b":"L3 · Apply","s":[],"r":[]},"5":{"d":"Easy","b":"L2 · Understand","s":[],"r":[11,30],"n":"HDFS - Q30 is Q5 + Q11 combined with a diagram"},"6":{"d":"Easy","b":"L3 · Apply","s":[],"r":[]},"7":{"d":"Easy","b":"L4 · Analyze","s":[20],"r":[]},"8":{"d":"Easy","b":"L3 · Apply","s":[],"r":[15,29,33],"n":"End-to-end cloud big data pipeline - same architecture, different framing"},"9":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[]},"10":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[31],"n":"MapReduce pros/cons - Q31 adds Spark/streaming angle"},"11":{"d":"Moderate","b":"L5 · Evaluate","s":[],"r":[5,30],"n":"HDFS - Q30 is Q5 + Q11 combined with a diagram"},"12":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[],"tl":"Pig"},"13":{"d":"Moderate","b":"L5 · Evaluate","s":[],"r":[],"tl":"Hive"},"14":{"d":"Moderate","b":"L3 · Apply","s":[],"r":[],"tl":"HBase"},"15":{"d":"Moderate","b":"L3 · Apply","s":[],"r":[8,29,33],"n":"End-to-end cloud big data pipeline - same architecture, different framing"},"16":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[],"tl":"HBase"},"17":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[]},"18":{"d":"Moderate","b":"L2 · Understand","s":[],"r":[36],"tl":"Mahout","n":"Mahout - Q36 is the extended version of Q18"},"19":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[]},"20":{"d":"Moderate","b":"L4 · Analyze","s":[7],"r":[]},"21":{"d":"Moderate","b":"L5 · Evaluate","s":[],"r":[]},"22":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[32]},"23":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[]},"24":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[]},"25":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[]},"26":{"d":"Moderate","b":"L4 · Analyze","s":[],"r":[33]},"27":{"d":"Moderate","b":"L3 · Apply","s":[],"r":[]},"28":{"d":"Moderate","b":"L2 · Understand","s":[],"r":[]},"29":{"d":"Hard","b":"L6 · Create","s":[],"r":[8,15,33],"n":"End-to-end cloud big data pipeline - same architecture, different framing"},"30":{"d":"Hard","b":"L4 · Analyze","s":[],"r":[5,11],"n":"HDFS - Q30 is Q5 + Q11 combined with a diagram"},"31":{"d":"Hard","b":"L5 · Evaluate","s":[],"r":[10],"n":"MapReduce pros/cons - Q31 adds Spark/streaming angle"},"32":{"d":"Hard","b":"L5 · Evaluate","s":[],"r":[22]},"33":{"d":"Hard","b":"L5 · Evaluate","s":[],"r":[8,15,26,29],"n":"End-to-end cloud big data pipeline - same architecture, different framing"},"34":{"d":"Hard","b":"L5 · Evaluate","s":[],"r":[]},"35":{"d":"Hard","b":"L4 · Analyze","s":[],"r":[]},"36":{"d":"Hard","b":"L4 · Analyze","s":[],"r":[18],"tl":"Mahout","n":"Mahout - Q36 is the extended version of Q18"}};
+
+const A = {};
+
+const KEY = "bda-u6-progress", AKEY = "bda-u6-answers";
+let state = {}, mine = {};
+try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ state = {}; }
+try { mine = JSON.parse(localStorage.getItem(AKEY)) || {}; } catch(e){ mine = {}; }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); localStorage.setItem(AKEY, JSON.stringify(mine)); } catch(e){} };
+
+function esc(s){ return s.replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+function md(text){
+  try {
+    if (window.marked && window.DOMPurify) return DOMPurify.sanitize(marked.parse(text, {gfm:true, breaks:false}));
+  } catch(e){}
+  return '<pre style="white-space:pre-wrap">'+esc(text)+'</pre>';
+}
+// the question whose imported answer applies to n: itself, else a repeat partner
+function srcOf(n){
+  if (mine[n]) return n;
+  return (META[n].s || []).find(p => mine[p]) || null;
+}
+function getAns(n){ const s = srcOf(n); return s ? md(mine[s]) : (A[n] || ""); }
+
+function parseAnswers(raw){
+  raw = raw.trim().replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/,"");
+  const data = JSON.parse(raw);
+  let list = Array.isArray(data) ? data : (data.answers || (data.q ? [data] : null));
+  if (!list) throw new Error("Couldn't find an \"answers\" list in the JSON.");
+  const ok = [];
+  list.forEach(it=>{
+    const n = parseInt(it.q ?? it.qno ?? it.question_no, 10);
+    if (!Q[n]) throw new Error("Question number " + (it.q ?? "?") + " is not in Unit 6 (1–36).");
+    if (typeof it.answer !== "string" || !it.answer.trim()) throw new Error("Q" + n + " has an empty answer.");
+    ok.push([n, it.answer]);
+  });
+  return ok;
+}
+
+let filter = "all", query = "";
+const check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const loop = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15"/><path d="M4 20v-5h5"/></svg>';
+
+function tagFor(n){
+  if (mine[n]) return '<span class="tag mine">your answer</span>';
+  const p = srcOf(n);
+  if (p) return '<span class="tag mine">answer from Q' + p + '</span>';
+  return A[n] ? '<span class="tag has">answer</span>' : '<span class="tag soon">no answer yet</span>';
+}
+
+function render(){
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  let shown = 0;
+  topics.forEach(t=>{
+    const items = t.qs.filter(n=>{
+      const s = state[n]||{};
+      if(filter==="done" && !s.d) return false;
+      if(filter==="rev" && !s.r) return false;
+      if(filter==="pending" && s.d) return false;
+      if(["Easy","Moderate","Hard"].includes(filter) && META[n].d!==filter) return false;
+      if(query && !(Q[n].toLowerCase().includes(query) || String(n)===query)) return false;
+      return true;
+    });
+    if(!items.length) return;
+    const doneCount = t.qs.filter(n=>(state[n]||{}).d).length;
+    const sec = document.createElement("section");
+    sec.innerHTML = `<h2><span>${t.name}</span><span>${doneCount}/${t.qs.length}</span></h2>`;
+    items.forEach(n=>{
+      shown++;
+      const s = state[n]||{};
+      const el = document.createElement("div");
+      el.className = "q" + (s.d?" done":"") + (s.r?" rev":"");
+      el.innerHTML = `<div class="qhead">
+        <div class="num">Q${n}</div>
+        <div class="qtext">${Q[n]}${tagFor(n)}
+          <div class="meta"><span class="tag ${META[n].d}">${META[n].d}</span><span class="tag bloom">${META[n].b}</span>${META[n].s.length?`<span class="tag same">same answer as ${META[n].s.map(p=>"Q"+p).join(", ")}</span>`:""}${META[n].tl?`<span class="tag tool">${META[n].tl}</span>`:""}${META[n].r.length?`<span class="tag rel">related: ${META[n].r.map(p=>"Q"+p).join(", ")}</span>`:""}</div>${META[n].n?`<div class="qnote">${esc(META[n].n)}</div>`:""}</div>
+        <div class="acts">
+          <button class="btn d ${s.d?"on":""}" title="Mark completed" aria-label="Mark completed">${check}</button>
+          <button class="btn r ${s.r?"on":""}" title="Needs revision" aria-label="Needs revision">${loop}</button>
+        </div></div>
+        ${getAns(n)?`<div class="ans">${getAns(n)}${mine[n]?'<button class="delans">Remove this added answer</button>':''}</div>`:""}`;
+      el.querySelector(".qtext").onclick = ()=>{ if(getAns(n)) el.classList.toggle("open"); };
+      const del = el.querySelector(".delans");
+      if (del) del.onclick = ()=>{
+        if (del.dataset.sure){ delete mine[n]; save(); render(); }
+        else { del.dataset.sure = 1; del.textContent = "Click again to confirm removal"; }
+      };
+      el.querySelector(".btn.d").onclick = ()=>{ toggle(n,"d"); };
+      el.querySelector(".btn.r").onclick = ()=>{ toggle(n,"r"); };
+      sec.appendChild(el);
+    });
+    list.appendChild(sec);
+  });
+  document.getElementById("empty").style.display = shown? "none":"block";
+  stats();
+}
+function toggle(n,k){
+  const open = [...document.querySelectorAll(".q.open .num")].map(e=>e.textContent);
+  state[n] = state[n]||{}; state[n][k] = !state[n][k]; save(); render();
+  document.querySelectorAll(".q").forEach(q=>{ if(open.includes(q.querySelector(".num").textContent)) q.classList.add("open"); });
+}
+function stats(){
+  const all = Object.keys(Q).length;
+  const d = Object.keys(Q).filter(n=>(state[n]||{}).d).length;
+  const r = Object.keys(Q).filter(n=>(state[n]||{}).r).length;
+  sDone.textContent = d; sRev.textContent = r; sLeft.textContent = all-d;
+  prog.style.width = (d/all*100)+"%";
+}
+document.querySelectorAll(".chip[data-f]").forEach(c=>c.onclick=()=>{
+  document.querySelectorAll(".chip[data-f]").forEach(x=>x.classList.remove("on"));
+  c.classList.add("on"); filter=c.dataset.f; render();
+});
+document.getElementById("search").oninput = e=>{ query=e.target.value.trim().toLowerCase(); render(); };
+resetBtn.onclick = ()=>{ resetBtn.style.display="none"; confirmBox.classList.add("show"); };
+noReset.onclick = ()=>{ resetBtn.style.display=""; confirmBox.classList.remove("show"); };
+yesReset.onclick = ()=>{ state={}; save(); noReset.onclick(); render(); };
+// modals
+const show = id => document.getElementById(id).classList.add("show");
+const hide = id => document.getElementById(id).classList.remove("show");
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>hide(b.dataset.close));
+document.querySelectorAll(".overlay").forEach(o=>o.onclick=e=>{ if(e.target===o) o.classList.remove("show"); });
+function msg(id, text, ok){ const m=document.getElementById(id); m.className="msg "+(ok?"ok":"err"); m.textContent=text; }
+
+openImport.onclick = ()=>{ importMsg.className="msg"; show("importBox"); importText.focus(); };
+doImport.onclick = ()=>{
+  try {
+    const items = parseAnswers(importText.value);
+    items.forEach(([n,a])=>{ mine[n]=a; });
+    save(); render();
+    msg("importMsg", "Added " + items.length + " answer" + (items.length>1?"s":"") + ": Q" + items.map(i=>i[0]).join(", Q"), true);
+    importText.value = "";
+    updateDlCount();
+  } catch(e){ msg("importMsg", "Couldn't read that: " + e.message, false); }
+};
+
+// import from .json file(s): all-or-nothing, same rules as pasted JSON
+pickFile.onclick = ()=>{ importFile.value = ""; importFile.click(); };
+importFile.onchange = async ()=>{
+  const files = [...importFile.files];
+  if(!files.length) return;
+  try {
+    const items = [];
+    for(const f of files){
+      try { items.push(...parseAnswers(await f.text())); }
+      catch(e){ throw new Error(f.name + ": " + e.message); }
+    }
+    items.forEach(([n,a])=>{ mine[n]=a; });
+    save(); render();
+    const nums = [...new Set(items.map(i=>i[0]))].sort((a,b)=>a-b);
+    msg("importMsg", "Added " + nums.length + " answer" + (nums.length>1?"s":"") + " from " + files.length + " file" + (files.length>1?"s":"") + ": Q" + nums.join(", Q"), true);
+    updateDlCount();
+  } catch(e){ msg("importMsg", "Couldn't read that: " + e.message, false); }
+  importFile.value = "";
+};
+
+// tabs
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on", x===t));
+  viewTracker.style.display = t.dataset.tab==="viewTracker" ? "" : "none";
+  viewGuide.style.display   = t.dataset.tab==="viewGuide"   ? "block" : "none";
+  if(t.dataset.tab==="viewGuide") updateDlCount();
+  window.scrollTo(0,0);
+});
+
+// export every answer on the page (imported ones override built-in ones) in the import format
+function buildExport(){
+  const answers = [];
+  Object.keys(Q).map(Number).sort((a,b)=>a-b).forEach(n=>{
+    const a = mine[n] || A[n];
+    if(a) answers.push({q:n, answer:a});
+  });
+  return {subject:"BDA", unit:6, answers};
+}
+function updateDlCount(){
+  const c = buildExport().answers.length;
+  dlCount.textContent = c + " answer" + (c===1?"":"s") + " ready to download";
+}
+function downloadAnswers(){
+  const data = buildExport();
+  if(!data.answers.length){ alert("There are no answers to download yet."); return; }
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "bda-unit6-answers.json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+dlToolbar.onclick = downloadAnswers;
+dlGuide.onclick = downloadAnswers;
+
+// copy helpers for the guide
+async function copyText(text, btn){
+  const old = btn.textContent;
+  try { await navigator.clipboard.writeText(text); btn.textContent = "Copied ✓"; }
+  catch(e){ btn.textContent = "Copy blocked: select the text manually"; }
+  setTimeout(()=>{ btn.textContent = old; }, 1800);
+}
+copyPrompt.onclick = ()=>copyText(promptText.textContent, copyPrompt);
+copyExample.onclick = ()=>copyText(JSON.stringify({answers:[{q:1, answer:"### HDFS roles\n- NameNode: metadata\n- DataNode: blocks\n\n> 🛒 Example: sale-day clickstream stored as replicated blocks."}]}, null, 2), copyExample);
+
+openBackup.onclick = ()=>{ backupMsg.className="msg"; backupText.value=""; show("backupBox"); };
+copyBackup.onclick = async ()=>{
+  const data = JSON.stringify({bda_unit6_backup:1, progress:state, answers:mine});
+  try { await navigator.clipboard.writeText(data); msg("backupMsg","Backup copied. Paste it somewhere safe.",true); }
+  catch(e){ backupText.value = data; backupText.select(); msg("backupMsg","Copying was blocked here, so the backup is shown in the box above. Select it and copy it manually.",false); }
+};
+doRestore.onclick = ()=>{
+  try {
+    const d = JSON.parse(backupText.value.trim());
+    if(!d.bda_unit6_backup) throw new Error("This doesn't look like a tracker backup.");
+    state = d.progress||{}; mine = d.answers||{}; save(); render();
+    msg("backupMsg","Restored your answers and marks.",true);
+  } catch(e){ msg("backupMsg","Couldn't restore: " + e.message, false); }
+};
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+{
+  "subject": "Big Data Analytics (BDA)",
+  "unit": "Unit 2 – Big Data Analytic Methods",
+  "course_outcome": "CO2",
+  "sorting": "Topic-wise, then difficulty-wise (Basic → Moderate → Hard; within a level by Bloom's level L2 → L6)",
+  "legend": {
+    "level": "Section of the question bank (Basic / Moderate / Hard)",
+    "bloom": "Bloom's level as given in the bank; '(inferred)' = not printed in the bank, guessed from the question verb",
+    "type": "theory = descriptive answer, numerical = calculation required"
+  },
+  "summary": {
+    "total_questions": 34,
+    "topics": 8,
+    "numericals": [23, 27, 29, 30, 31, 32]
+  },
+  "topics": [
+    {
+      "topic_no": 1,
+      "topic": "Neural Networks – Learning, Generalization, Training/Testing & Evaluation",
+      "question_count": 7,
+      "questions": [
+        { "q_no": 7, "level": "Basic", "bloom": "L2 – Understand", "type": "theory",
+          "question": "Differentiate learning and generalization in neural networks using a real-world Big Data Analytics application." },
+        { "q_no": 8, "level": "Basic", "bloom": "L2 – Understand", "type": "theory",
+          "question": "Illustrate the roles of training and testing datasets in developing and evaluating a neural network for Big Data Analytics." },
+        { "q_no": 1, "level": "Basic", "bloom": "L2 – Understand", "type": "theory",
+          "question": "Compare competitive learning and supervised learning by applying them to a customer-segmentation problem in Big Data Analytics." },
+        { "q_no": 6, "level": "Basic", "bloom": "L3 – Apply", "type": "theory",
+          "question": "Select appropriate evaluation metrics for a neural-network classifier detecting fraudulent transactions in an imbalanced Big Data dataset." },
+        { "q_no": 5, "level": "Basic", "bloom": "L4 – Analyze", "type": "theory",
+          "question": "Analyze training and testing errors in a neural network to identify overfitting and underfitting in a Big Data application." },
+        { "q_no": 12, "level": "Moderate", "bloom": "L4 – Analyze", "type": "theory",
+          "question": "A neural-network classifier achieves 98% training accuracy but only 76% test accuracy. Analyze the likely causes and recommend cross-validation and regularization strategies." },
+        { "q_no": 22, "level": "Moderate", "bloom": "L6 – Create (inferred)", "type": "theory",
+          "question": "A research team trains a neural network using backpropagation for demand forecasting. Develop a training and validation procedure that reduces overfitting and evaluates generalization on unseen data." }
+      ]
+    },
+    {
+      "topic_no": 2,
+      "topic": "Bayesian Methods – Bayesian vs Frequentist, Bayesian Inference & Bayesian Networks",
+      "question_count": 4,
+      "questions": [
+        { "q_no": 3, "level": "Basic", "bloom": "L4 – Analyze", "type": "theory",
+          "question": "Compare Bayesian and frequentist approaches for estimating the probability of fraudulent financial transactions in large-scale datasets." },
+        { "q_no": 11, "level": "Moderate", "bloom": "L2 – Understand", "type": "theory",
+          "question": "Construct a simple Bayesian Network representing the relationship between symptoms, diagnostic tests, and a disease." },
+        { "q_no": 9, "level": "Moderate", "bloom": "L4 – Analyze", "type": "theory",
+          "question": "A financial analyst uses Bayesian inference to estimate the probability of loan default. Analyze the role of prior distributions, likelihood, and posterior probability in the prediction." },
+        { "q_no": 13, "level": "Moderate", "bloom": "L5 – Evaluate", "type": "theory",
+          "question": "A credit-scoring dataset contains thousands of correlated features and relatively few labelled records. Evaluate the limitations of Bayesian inference and suggest suitable approaches to handle data sparsity and dimensionality." }
+      ]
+    },
+    {
+      "topic_no": 3,
+      "topic": "Time-Series Analysis – Linear vs Nonlinear Models & Forecasting",
+      "question_count": 4,
+      "questions": [
+        { "q_no": 2, "level": "Basic", "bloom": "L4 – Analyze", "type": "theory",
+          "question": "Differentiate linear and nonlinear time-series models by analyzing monthly sales data and stock-price movements." },
+        { "q_no": 10, "level": "Moderate", "bloom": "L4 – Analyze", "type": "theory",
+          "question": "A company forecasts monthly sales using historical data containing seasonal variations and nonlinear trends. Compare traditional statistical models with neural-network-based forecasting." },
+        { "q_no": 15, "level": "Moderate", "bloom": "L5 – Evaluate", "type": "theory",
+          "question": "A stock-market dataset contains abrupt price changes, nonlinear patterns, and volatility. Compare linear and nonlinear time-series approaches and recommend an appropriate evaluation strategy." },
+        { "q_no": 17, "level": "Moderate", "bloom": "L5 – Evaluate", "type": "theory",
+          "question": "A retail company forecasts product demand using historical sales data. Select a suitable time-series model after considering trend, seasonality, data volume, and forecast horizon." }
+      ]
+    },
+    {
+      "topic_no": 4,
+      "topic": "Rule Induction & Decision Trees – CN2, PART, Decision Table, RIPPER, ID3, Pruning",
+      "question_count": 7,
+      "questions": [
+        { "q_no": 20, "level": "Moderate", "bloom": "L3 – Apply (inferred)", "type": "theory",
+          "question": "A telecom company wants to predict customer churn using call duration, internet usage, service complaints, and billing issues. Apply the PART rule-induction approach and propose a method for evaluating the generated rules." },
+        { "q_no": 18, "level": "Moderate", "bloom": "L4 – Analyze", "type": "theory",
+          "question": "A rule-based credit-risk model produces too many rules and performs poorly on unseen applications. Analyze the effects of overfitting and propose pruning and validation techniques." },
+        { "q_no": 19, "level": "Moderate", "bloom": "L4 – Analyze", "type": "theory",
+          "question": "A hospital plans to classify patients as diabetic or non-diabetic using age, BMI, glucose level, insulin level, and blood pressure. Design a CN2 rule-induction workflow and identify the measures required to evaluate the resulting rules." },
+        { "q_no": 14, "level": "Moderate", "bloom": "L5 – Evaluate", "type": "theory",
+          "question": "A bank wants interpretable rules for classifying loan applications as low or high risk. Evaluate the suitability of rule induction compared with a neural network." },
+        { "q_no": 21, "level": "Moderate", "bloom": "L6 – Create (inferred)", "type": "theory",
+          "question": "A university wants to predict student pass/fail outcomes using attendance, study hours, previous grades, and extracurricular participation. Design a decision-table rule-induction approach for the prediction task." },
+        { "q_no": 28, "level": "Hard", "bloom": "L3 – Apply", "type": "theory",
+          "question": "A bank wants to detect fraudulent transactions using transaction amount, location, time, and customer behaviour. Apply the RIPPER rule-induction algorithm to generate classification rules and propose a validation strategy." },
+        { "q_no": 30, "level": "Hard", "bloom": "L3 – Apply", "type": "numerical",
+          "question": "A weather-based decision system uses Outlook, Temperature, Humidity, and Wind to predict whether students will play a game. Apply the ID3 algorithm to the dataset below and construct a decision tree using information gain.",
+          "note": "Dataset is missing from the question bank – the standard 14-row 'Play Tennis' dataset will be assumed unless provided." }
+      ]
+    },
+    {
+      "topic_no": 5,
+      "topic": "Dimensionality Reduction – Principal Component Analysis (PCA)",
+      "question_count": 8,
+      "questions": [
+        { "q_no": 24, "level": "Moderate", "bloom": "L3 – Apply", "type": "theory",
+          "question": "Apply Principal Component Analysis (PCA) to explain how a dataset with multiple features can be transformed into a smaller set of features while preserving maximum information." },
+        { "q_no": 26, "level": "Moderate", "bloom": "L3 – Apply", "type": "theory",
+          "question": "Apply Principal Component Analysis (PCA) to explain how a dataset with multiple features can be transformed into a smaller set of features while preserving maximum information.",
+          "note": "Exact duplicate of Q24 – same answer." },
+        { "q_no": 23, "level": "Moderate", "bloom": "L3 – Apply", "type": "numerical",
+          "question": "A college wants to reduce two related features, Study Hours and Assignment Marks, into one principal component using PCA to simplify student performance analysis. Apply PCA to reduce the two features into one principal component. Show the major steps involved in the transformation.",
+          "data": {
+            "columns": ["Student", "Study Hours", "Assignment Marks"],
+            "rows": [["A", 1, 10], ["B", 2, 20], ["C", 3, 30], ["D", 4, 40], ["E", 5, 50]]
+          } },
+        { "q_no": 16, "level": "Moderate", "bloom": "L4 – Analyze", "type": "theory",
+          "question": "A data scientist applies Principal Component Analysis to a dataset containing highly correlated financial indicators. Analyze how dimensionality reduction can improve model efficiency and identify its limitations." },
+        { "q_no": 25, "level": "Moderate", "bloom": "L5 – Evaluate", "type": "theory",
+          "question": "Evaluate the effectiveness of Principal Component Analysis (PCA) for reducing the dimensionality of a dataset. Discuss its advantages and limitations in preserving information and improving model performance." },
+        { "q_no": 32, "level": "Hard", "bloom": "L3 – Apply", "type": "numerical",
+          "question": "A real estate company records the area and price of houses. Since these features are related, the company wants to reduce them into one principal component using PCA. Apply PCA to transform the two original features into one principal component. Illustrate the transformation using the given dataset.",
+          "data": {
+            "columns": ["House", "Area (sq. ft.)", "Price (₹ lakh)"],
+            "rows": [["A", 500, 25], ["B", 600, 30], ["C", 700, 35], ["D", 800, 40], ["E", 900, 45]]
+          } },
+        { "q_no": 27, "level": "Hard", "bloom": "L3 – Apply", "type": "numerical",
+          "question": "A dataset contains two customer features: annual income and spending score. Given the observations (2, 1), (4, 3), (6, 5), and (8, 7), calculate the covariance matrix, eigenvalues, eigenvectors, and first principal component using PCA.",
+          "data": { "points": [[2, 1], [4, 3], [6, 5], [8, 7]] } },
+        { "q_no": 29, "level": "Hard", "bloom": "L3 – Apply", "type": "numerical",
+          "question": "A dataset contains the following two-dimensional observations: A(2.5, 2.4), B(0.5, 0.7), C(2.2, 2.9), D(1.9, 2.2), and E(3.1, 3.0). Calculate the mean-centred data, covariance matrix, principal eigenvector, and one-dimensional projections.",
+          "data": { "points": { "A": [2.5, 2.4], "B": [0.5, 0.7], "C": [2.2, 2.9], "D": [1.9, 2.2], "E": [3.1, 3.0] } } }
+      ]
+    },
+    {
+      "topic_no": 6,
+      "topic": "Instance-Based Learning – K-Nearest Neighbour (KNN)",
+      "question_count": 1,
+      "questions": [
+        { "q_no": 31, "level": "Hard", "bloom": "L3 – Apply", "type": "numerical",
+          "question": "ARTiMAS-2025 (AiMSA, CSE(AI&ML), PCCOE): Using labelled data of the organizing team and volunteers (height, weight, T-shirt size), develop a K-nearest neighbour model to predict T-shirt sizes. Use Euclidean distance, k = 3. Interpret the results and predict the T-shirt size for the given test cases.",
+          "data": {
+            "columns": ["Height (cm)", "Weight (kg)", "T-shirt Size"],
+            "rows": [
+              [158, 52, "S"], [158, 62, "M"], [157, 59, "M"], [160, 60, "M"],
+              [161, 64, "L"], [161, 65, "L"], [163, 64, "L"], [172, 74, "XL"],
+              [169, 72, "XL"], [171, 78, "XL"], [162, 50, "S"], [160, 51, "S"]
+            ],
+            "test_cases": [
+              { "case": 1, "height": 164, "weight": 65 },
+              { "case": 2, "height": 154, "weight": 52 }
+            ]
+          },
+          "note": "Question says 'both distance measures' but names only Euclidean – Manhattan can be added as the second measure for full marks." }
+      ]
+    },
+    {
+      "topic_no": 7,
+      "topic": "Stochastic Search & Optimization",
+      "question_count": 1,
+      "questions": [
+        { "q_no": 4, "level": "Basic", "bloom": "L3 – Apply", "type": "theory",
+          "question": "Apply stochastic search methods to identify suitable solutions for high-dimensional optimization problems in Big Data Analytics." }
+      ]
+    },
+    {
+      "topic_no": 8,
+      "topic": "Multivariate Analysis – Correlation, Covariance & Multiple Regression",
+      "question_count": 2,
+      "questions": [
+        { "q_no": 33, "level": "Hard", "bloom": "L3 – Apply", "type": "theory",
+          "question": "Analyze the suitability of correlation analysis and covariance analysis for identifying relationships among multiple variables." },
+        { "q_no": 34, "level": "Hard", "bloom": "L4 – Analyze (inferred)", "type": "theory",
+          "question": "Analyze the relationship between multiple independent variables and a dependent variable in a multivariate dataset." }
+      ]
+    }
+  ]
+}

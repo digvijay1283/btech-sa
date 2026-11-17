@@ -1,0 +1,115 @@
+{
+  "subject": "Big Data Analytics (BDA)",
+  "department": "CSE (AI & ML)",
+  "academic_year": "2026-2027",
+  "semester": "I",
+  "co_mapped": "CO6",
+  "total_questions": 36,
+  "sort_order": "Topic-wise (in learning order), then Easy -> Moderate -> Hard",
+  "topics": [
+    {
+      "topic_no": 1,
+      "topic": "Unstructured Data & Text Analytics",
+      "question_count": 4,
+      "questions": [
+        { "q_no": 1, "difficulty": "Easy", "bloom": "Understand (L2)", "question": "Classify unstructured data using suitable examples from social media posts, images, videos, and customer reviews." },
+        { "q_no": 2, "difficulty": "Easy", "bloom": "Understand (L2)", "question": "Illustrate the application of text analytics and sentiment analysis to extract useful insights from unstructured customer reviews." },
+        { "q_no": 3, "difficulty": "Easy", "bloom": "Analyze (L4)", "question": "Analyze the challenges involved in processing large volumes of unstructured data from social media platforms." },
+        { "q_no": 9, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Compare structured and unstructured data in terms of storage, organization, and processing." }
+      ]
+    },
+    {
+      "topic_no": 2,
+      "topic": "Hadoop Fundamentals & Distributed Computing",
+      "question_count": 3,
+      "questions": [
+        { "q_no": 6, "difficulty": "Easy", "bloom": "Apply (L3)", "question": "Apply Apache Hadoop to process a large-scale dataset using distributed storage and parallel processing." },
+        { "q_no": 17, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Analyze the impact of distributed computing on Big Data analytics." },
+        { "q_no": 28, "difficulty": "Moderate", "bloom": "Understand (L2)", "question": "Illustrate the components of the Hadoop ecosystem using a suitable diagram and state their respective functions." }
+      ]
+    },
+    {
+      "topic_no": 3,
+      "topic": "HDFS (Hadoop Distributed File System)",
+      "question_count": 3,
+      "questions": [
+        { "q_no": 5, "difficulty": "Easy", "bloom": "Understand (L2)", "question": "Illustrate the roles of the NameNode and DataNode in storing and managing files in HDFS." },
+        { "q_no": 11, "difficulty": "Moderate", "bloom": "Evaluate (L5)", "question": "Evaluate the impact of HDFS block replication on data reliability and fault tolerance." },
+        { "q_no": 30, "difficulty": "Hard", "bloom": "Analyze (L4)", "question": "Analyze how HDFS achieves fault tolerance, high throughput, and scalability. Support your answer with a suitable diagram.", "overlaps_with": [5, 11] }
+      ]
+    },
+    {
+      "topic_no": 4,
+      "topic": "MapReduce",
+      "question_count": 3,
+      "questions": [
+        { "q_no": 4, "difficulty": "Easy", "bloom": "Apply (L3)", "question": "Apply the MapReduce programming model to process a large dataset and calculate the frequency of each word." },
+        { "q_no": 10, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Analyze the advantages and limitations of MapReduce for processing large datasets." },
+        { "q_no": 31, "difficulty": "Hard", "bloom": "Evaluate (L5)", "question": "Evaluate the role and limitations of MapReduce in the era of streaming analytics and in-memory processing.", "overlaps_with": [10] }
+      ]
+    },
+    {
+      "topic_no": 5,
+      "topic": "Hadoop Ecosystem Tools (Pig, Hive, HBase, Mahout)",
+      "question_count": 6,
+      "questions": [
+        { "q_no": 12, "difficulty": "Moderate", "bloom": "Analyze (L4)", "tool": "Pig", "question": "Examine how Apache Pig simplifies data processing in Hadoop." },
+        { "q_no": 13, "difficulty": "Moderate", "bloom": "Evaluate (L5)", "tool": "Hive", "question": "Assess the role of Apache Hive in data warehousing for Big Data applications." },
+        { "q_no": 14, "difficulty": "Moderate", "bloom": "Apply (L3)", "tool": "HBase", "question": "Illustrate the use of HBase for real-time data storage and retrieval with a suitable example." },
+        { "q_no": 16, "difficulty": "Moderate", "bloom": "Analyze (L4)", "tool": "HBase", "question": "Compare HBase and traditional relational databases in terms of scalability, data model, and flexibility." },
+        { "q_no": 18, "difficulty": "Moderate", "bloom": "Understand (L2)", "tool": "Mahout", "question": "Discuss the role of Apache Mahout in implementing machine learning algorithms in Hadoop." },
+        { "q_no": 36, "difficulty": "Hard", "bloom": "Analyze (L4)", "tool": "Mahout", "question": "Analyze how Apache Mahout supports machine learning in Hadoop, considering its integration with other Hadoop ecosystem components, advantages, and limitations.", "overlaps_with": [18] }
+      ]
+    },
+    {
+      "topic_no": 6,
+      "topic": "NoSQL Databases",
+      "question_count": 3,
+      "questions": [
+        { "q_no": 7, "difficulty": "Easy", "bloom": "Analyze (L4)", "question": "Compare key-value, document, column-family, and graph NoSQL databases for selecting a suitable database for a Big Data application." },
+        { "q_no": 19, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Analyze the importance of NoSQL databases in Big Data applications." },
+        { "q_no": 20, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Compare key-value, document, column-family, and graph-based NoSQL databases with suitable applications.", "overlaps_with": [7] }
+      ]
+    },
+    {
+      "topic_no": 7,
+      "topic": "Cloud for Big Data: Services & Platforms",
+      "question_count": 5,
+      "questions": [
+        { "q_no": 8, "difficulty": "Easy", "bloom": "Apply (L3)", "question": "Apply cloud computing services to design a scalable Big Data Analytics solution for processing large volumes of data." },
+        { "q_no": 15, "difficulty": "Moderate", "bloom": "Apply (L3)", "question": "Illustrate how a cloud platform supports end-to-end Big Data analytics using a real-world example." },
+        { "q_no": 24, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Compare IaaS, PaaS, and SaaS in terms of their support for Big Data analytics." },
+        { "q_no": 26, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Compare AWS, Google Cloud Platform, and Microsoft Azure for Big Data analytics based on processing, storage, and scalability." },
+        { "q_no": 33, "difficulty": "Hard", "bloom": "Evaluate (L5)", "question": "A fast-growing e-commerce company processes terabytes of customer behavior, product interaction, and transaction data daily. Its local infrastructure cannot meet increasing storage and processing demands. Analyze how migrating to AWS, Microsoft Azure, or Google Cloud can improve scalability and processing efficiency. Recommend suitable cloud services and justify your selection.", "overlaps_with": [8, 26] }
+      ]
+    },
+    {
+      "topic_no": 8,
+      "topic": "Cloud for Big Data: Architecture, Cost, Security & Integration",
+      "question_count": 9,
+      "questions": [
+        { "q_no": 21, "difficulty": "Moderate", "bloom": "Evaluate (L5)", "question": "Assess how cloud-based analytics platforms improve the scalability of Big Data processing." },
+        { "q_no": 22, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Compare cloud-based data storage with on-premises storage in terms of cost, scalability, and accessibility." },
+        { "q_no": 23, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Analyze the impact of data security concerns in cloud-based analytics and recommend suitable safeguards." },
+        { "q_no": 25, "difficulty": "Moderate", "bloom": "Analyze (L4)", "question": "Analyze the trade-offs between performance and cost in cloud-based Big Data architectures, using a suitable example." },
+        { "q_no": 27, "difficulty": "Moderate", "bloom": "Apply (L3)", "question": "Illustrate the data preprocessing steps performed in a cloud-based analytics platform." },
+        { "q_no": 29, "difficulty": "Hard", "bloom": "Create (L6)", "question": "Design an end-to-end cloud-based Big Data analytics architecture for an organization, identifying the roles of data storage, processing, analytics, APIs, and interfaces." },
+        { "q_no": 32, "difficulty": "Hard", "bloom": "Evaluate (L5)", "question": "Evaluate the challenges of integrating cloud-based Big Data solutions with on-premises infrastructure and recommend suitable integration strategies.", "overlaps_with": [22] },
+        { "q_no": 34, "difficulty": "Hard", "bloom": "Evaluate (L5)", "question": "Compare batch processing and real-time processing in cloud-based analytics and recommend an appropriate architecture for an application requiring both historical analysis and immediate insights." },
+        { "q_no": 35, "difficulty": "Hard", "bloom": "Analyze (L4)", "question": "Analyze how containerization and edge computing influence cloud-based Big Data processing, considering latency, resource utilization, and scalability." }
+      ]
+    }
+  ],
+  "difficulty_summary": {
+    "Easy": [1, 2, 3, 4, 5, 6, 7, 8],
+    "Moderate": [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+    "Hard": [29, 30, 31, 32, 33, 34, 35, 36]
+  },
+  "near_duplicate_groups": [
+    { "questions": [7, 20], "note": "Same comparison of 4 NoSQL types - one answer covers both" },
+    { "questions": [5, 11, 30], "note": "HDFS - Q30 is Q5 + Q11 combined with a diagram" },
+    { "questions": [10, 31], "note": "MapReduce pros/cons - Q31 adds Spark/streaming angle" },
+    { "questions": [18, 36], "note": "Mahout - Q36 is the extended version of Q18" },
+    { "questions": [8, 15, 29, 33], "note": "End-to-end cloud big data pipeline - same architecture, different framing" }
+  ]
+}

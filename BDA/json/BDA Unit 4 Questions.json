@@ -1,0 +1,101 @@
+{
+  "chapter": "Unit 4 - Mining Data Streams",
+  "topics": [
+    {
+      "topic": "Stream Data Model & Characteristics",
+      "questions": [
+        { "id": 1, "question": "Identify the key characteristics of a data stream in a real-time Big Data Analytics application.", "difficulty": "easy" },
+        { "id": 2, "question": "Illustrate the main components of the Stream Data Model using a real-time monitoring application.", "difficulty": "easy" },
+        { "id": 9, "question": "Analyze the challenges associated with processing large-scale streaming data.", "difficulty": "medium" },
+        { "id": 16, "question": "Investigate the limitations of traditional databases for stream data management.", "difficulty": "medium" }
+      ]
+    },
+    {
+      "topic": "Stream vs Batch Processing",
+      "questions": [
+        { "id": 3, "question": "Compare stream computing and traditional batch processing using a real-time banking transaction scenario.", "difficulty": "easy" },
+        { "id": 20, "question": "Compare batch processing and stream processing for financial transactions.", "difficulty": "medium" }
+      ]
+    },
+    {
+      "topic": "Data Filtering (Bloom Filter)",
+      "questions": [
+        { "id": 4, "question": "Apply data-filtering techniques to remove irrelevant records from a real-time data stream.", "difficulty": "easy" },
+        { "id": 13, "question": "Analyze the impact of data filtering techniques on stream processing performance.", "difficulty": "medium" }
+      ]
+    },
+    {
+      "topic": "Windowing & Sampling",
+      "questions": [
+        { "id": 10, "question": "Compare different windowing techniques used in stream processing.", "difficulty": "medium" },
+        { "id": 12, "question": "Compare different sampling techniques used in stream data processing.", "difficulty": "medium" },
+        { "id": 36, "question": "Evaluate the trade-offs between accuracy and computational efficiency in stream sampling techniques and recommend an appropriate technique for a high-velocity data stream.", "difficulty": "hard" }
+      ]
+    },
+    {
+      "topic": "Counting Distinct Elements & Moments (Flajolet-Martin)",
+      "questions": [
+        { "id": 5, "question": "Apply a suitable algorithm to estimate the number of distinct elements in a high-volume data stream.", "difficulty": "easy" },
+        { "id": 6, "question": "Illustrate the use of statistical moments to analyze the distribution of streaming data in a real-time application.", "difficulty": "easy" },
+        { "id": 11, "question": "Demonstrate the Flajolet-Martin algorithm for estimating the number of distinct elements in a data stream using a suitable example.", "difficulty": "medium" },
+        { "id": 25, "question": "Given the stream [a, b, c, a, b, d, e], estimate the number of distinct elements using the Flajolet-Martin algorithm. Use ASCII(a) = 97 and the hash function h(x) = (3x + 7) mod 32, where x is the ASCII value of the first character.", "difficulty": "medium", "type": "numerical" },
+        { "id": 26, "question": "Given the stream [4, 2, 5, 9, 1, 6, 3, 7] and the hash function h(x) = (3x + 1) mod 5, estimate the number of distinct elements using an appropriate streaming algorithm.", "difficulty": "medium", "type": "numerical" }
+      ]
+    },
+    {
+      "topic": "Sketching & Probabilistic Data Structures (Count-Min Sketch)",
+      "questions": [
+        { "id": 14, "question": "Evaluate the effectiveness of hashing-based methods for approximating stream statistics.", "difficulty": "medium" },
+        { "id": 18, "question": "Discuss the significance of sketching algorithms in estimating frequency counts in data streams.", "difficulty": "medium" },
+        { "id": 23, "question": "Analyze the role of probabilistic data structures in efficient stream data processing.", "difficulty": "medium" },
+        { "id": 24, "question": "Consider the stream of hashtags [173, 188, 173, 413, 173, 188, 687]. Use Count-Min Sketch to estimate the frequency of each hashtag using the following hash functions: [missing in question bank]", "difficulty": "medium", "type": "numerical" }
+      ]
+    },
+    {
+      "topic": "Stream Architecture & Tools (Kafka, Flink, Parallelism)",
+      "questions": [
+        { "id": 22, "question": "Examine the roles of Apache Kafka and Apache Flink in stream processing.", "difficulty": "medium" },
+        { "id": 31, "question": "Design an optimized streaming architecture for processing high-velocity data while maintaining low latency and high throughput.", "difficulty": "hard" },
+        { "id": 34, "question": "Evaluate the role of parallelism in improving stream processing efficiency under high data volumes.", "difficulty": "hard" }
+      ]
+    },
+    {
+      "topic": "Real-time Sentiment Analysis",
+      "questions": [
+        { "id": 7, "question": "Apply real-time sentiment analysis to classify customer opinions from a streaming dataset of social media posts.", "difficulty": "easy" },
+        { "id": 21, "question": "Compare different real-time sentiment analysis methods applied to social media data.", "difficulty": "medium" },
+        { "id": 30, "question": "Analyze the ethical considerations associated with real-time sentiment analysis on social media and recommend measures to address them.", "difficulty": "hard" }
+      ]
+    },
+    {
+      "topic": "Real-time Stock Market Prediction",
+      "questions": [
+        { "id": 8, "question": "Apply a suitable machine learning approach to predict stock market trends using real-time streaming data.", "difficulty": "easy" },
+        { "id": 17, "question": "Analyze real-time stock price fluctuations using stream computing techniques.", "difficulty": "medium" },
+        { "id": 28, "question": "Assess the challenges involved in deploying real-time stock market prediction models.", "difficulty": "medium" }
+      ]
+    },
+    {
+      "topic": "Recommendation, Advertising & Clickstream",
+      "questions": [
+        { "id": 15, "question": "Illustrate the design of a real-time recommendation system using streaming data.", "difficulty": "medium" },
+        { "id": 33, "question": "Design a personalized advertising system using data streams and recommend suitable techniques for processing user activity in real time.", "difficulty": "hard" },
+        { "id": 35, "question": "Analyze how real-time clickstream data can be processed in e-commerce platforms to identify user behavior patterns and improve recommendations.", "difficulty": "hard" }
+      ]
+    },
+    {
+      "topic": "Fraud, Anomaly Detection & IoT Monitoring",
+      "questions": [
+        { "id": 19, "question": "Assess the advantages of real-time fraud detection using streaming data.", "difficulty": "medium" },
+        { "id": 27, "question": "Illustrate the development of a real-time anomaly detection system using stream analytics.", "difficulty": "medium" },
+        { "id": 29, "question": "Analyze the use of sensor data streams in IoT applications and recommend suitable stream processing techniques for real-time monitoring.", "difficulty": "hard" }
+      ]
+    },
+    {
+      "topic": "Concept Drift",
+      "questions": [
+        { "id": 32, "question": "Evaluate the impact of concept drift on machine learning models applied to data streams and recommend suitable adaptation techniques.", "difficulty": "hard" }
+      ]
+    }
+  ]
+}

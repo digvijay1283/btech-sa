@@ -1,0 +1,102 @@
+{
+  "subject": "Big Data Analytics (BDA)",
+  "chapter": "Unit 1 - Introduction to Big Data Analytics",
+  "difficulty_order": ["Basic", "Moderate", "Higher"],
+  "topics": [
+    {
+      "topic_no": 1,
+      "topic": "Big Data Fundamentals - 5 Vs, Data Sources & Formats",
+      "questions": [
+        { "id": 1, "question": "Classify a social media dataset according to the five Vs of Big Data, using suitable examples for each characteristic.", "difficulty": "Basic", "bloom": "L2 - Understand" },
+        { "id": 5, "question": "Classify web logs, customer reviews, transaction records, images, and sensor readings according to their data sources and formats.", "difficulty": "Basic", "bloom": "L3 - Apply" }
+      ]
+    },
+    {
+      "topic_no": 2,
+      "topic": "Traditional Systems vs Big Data Platforms & Architecture",
+      "questions": [
+        { "id": 2, "question": "Compare traditional data-processing systems with distributed Big Data platforms in terms of scalability, storage, and processing speed.", "difficulty": "Basic", "bloom": "L2 - Understand", "same_answer_as": [7] },
+        { "id": 7, "question": "Compare and contrast traditional data processing with Big Data approaches.", "difficulty": "Basic", "bloom": "L2 - Understand", "same_answer_as": [2] },
+        { "id": 6, "question": "Select an appropriate storage and processing approach for an organization that generates large volumes of structured and unstructured data.", "difficulty": "Basic", "bloom": "L3 - Apply" },
+        { "id": 9, "question": "A retail company receives millions of transactions, product reviews, and website clicks daily. Analyze the limitations of its traditional database and recommend a suitable Big Data architecture.", "difficulty": "Moderate", "bloom": "L4 - Analyze" }
+      ]
+    },
+    {
+      "topic_no": 3,
+      "topic": "Data Analytics Life Cycle (6 Phases)",
+      "questions": [
+        { "id": 3, "question": "Identify the six phases of the Data Analytics Life Cycle in a customer-retention project and state the primary activity performed in each phase.", "difficulty": "Basic", "bloom": "L2 - Understand" },
+        { "id": 11, "question": "Apply all six phases of the Data Analytics Life Cycle to a customer-sentiment analysis project for an e-commerce company. Specify the activity and expected output of each phase.", "difficulty": "Moderate", "bloom": "L3 - Apply", "same_answer_as": [18] },
+        { "id": 18, "question": "Apply the Data Analytic Life Cycle to a customer sentiment analysis case study.", "difficulty": "Moderate", "bloom": "L4 - Analyze", "same_answer_as": [11] }
+      ]
+    },
+    {
+      "topic_no": 4,
+      "topic": "Data Preparation & Preprocessing",
+      "questions": [
+        { "id": 4, "question": "Demonstrate the role of data preparation in improving the quality of an online retail sales dataset.", "difficulty": "Basic", "bloom": "L2 - Understand" },
+        { "id": 12, "question": "A data science team builds a customer-churn model using a dataset containing missing values, duplicate records, and inconsistent formats. Analyze how poor data preparation could affect model performance.", "difficulty": "Moderate", "bloom": "L4 - Analyze", "same_answer_as": [22] },
+        { "id": 22, "question": "Analyze the risks of poor data preparation and their impact on model accuracy.", "difficulty": "Moderate", "bloom": "L4 - Analyze", "same_answer_as": [12] },
+        { "id": 26, "question": "A dataset contains missing values, outliers, inconsistent date formats, and duplicate customer records. Develop a preprocessing procedure and justify the treatment selected for each issue.", "difficulty": "Higher", "bloom": "L6 - Create", "same_answer_as": [29] },
+        { "id": 29, "question": "Given a dataset with missing values and outliers, demonstrate a strategy for cleaning and preparing the data.", "difficulty": "Higher", "bloom": "L6 - Create", "same_answer_as": [26] }
+      ]
+    },
+    {
+      "topic_no": 5,
+      "topic": "Model Planning, Model Selection & Feature Selection",
+      "questions": [
+        { "id": 8, "question": "Apply suitable model selection criteria to select an appropriate analytical model for a given Big Data Analytics problem during the Model Planning phase.", "difficulty": "Basic", "bloom": "L3 - Apply" },
+        { "id": 13, "question": "A bank plans to use customer transaction data for credit-risk prediction. Evaluate the factors that should guide model selection, including accuracy, interpretability, data volume, and computational cost.", "difficulty": "Moderate", "bloom": "L4 - Analyze" },
+        { "id": 17, "question": "A recommendation system uses browsing history and past purchases. Analyze the importance of feature selection and its influence on computational efficiency and recommendation quality.", "difficulty": "Moderate", "bloom": "L4 - Analyze" },
+        { "id": 27, "question": "A company observes that its machine-learning model performs well on training data but poorly on new customer records. Evaluate possible causes and recommend improvements to model selection, validation, and deployment.", "difficulty": "Higher", "bloom": "L5 - Evaluate" }
+      ]
+    },
+    {
+      "topic_no": 6,
+      "topic": "Communicate Results - Visualization & Dashboards",
+      "questions": [
+        { "id": 15, "question": "A business uses dashboards to communicate customer behavior to its management team. Select suitable visualization methods and justify their use during the Communicate Results phase.", "difficulty": "Moderate", "bloom": "L4 - Analyze", "same_answer_as": [19] },
+        { "id": 19, "question": "Analyze the role of visualization techniques in the Communicate Results phase.", "difficulty": "Moderate", "bloom": "L4 - Analyze", "same_answer_as": [15] }
+      ]
+    },
+    {
+      "topic_no": 7,
+      "topic": "Operationalize, Real-Time Analytics & Fraud Detection",
+      "questions": [
+        { "id": 16, "question": "A financial institution deploys a fraud-detection model. Analyze the security, monitoring, and maintenance activities required during the Operationalize phase.", "difficulty": "Moderate", "bloom": "L4 - Analyze" },
+        { "id": 20, "question": "Analyze the relationship between web data and real-time Big Data analytics.", "difficulty": "Moderate", "bloom": "L4 - Analyze" },
+        { "id": 21, "question": "Discuss the importance of anomaly detection techniques in Big Data fraud prevention.", "difficulty": "Moderate", "bloom": "L4 - Analyze" },
+        { "id": 24, "question": "A bank receives transaction events continuously and must flag suspicious payments within seconds. Design a real-time fraud-detection workflow covering ingestion, preprocessing, analysis, alert generation, and monitoring.", "difficulty": "Higher", "bloom": "L6 - Create" }
+      ]
+    },
+    {
+      "topic_no": 8,
+      "topic": "Data Integration, Privacy, Security & Ethics",
+      "questions": [
+        { "id": 10, "question": "A healthcare organization combines patient records, laboratory reports, medical images, and wearable-device readings. Analyze the challenges of data integration, privacy, storage, and preprocessing.", "difficulty": "Moderate", "bloom": "L4 - Analyze" },
+        { "id": 14, "question": "A company collects customer location and browsing information for personalized services. Evaluate the privacy, consent, security, and ethical issues involved in the analytics process.", "difficulty": "Moderate", "bloom": "L4 - Analyze" }
+      ]
+    },
+    {
+      "topic_no": 9,
+      "topic": "Cloud Computing for Big Data",
+      "questions": [
+        { "id": 25, "question": "An organization plans to migrate its analytics workload from local servers to a cloud platform. Develop a migration strategy addressing scalability, storage, cost, data security, and availability.", "difficulty": "Higher", "bloom": "L6 - Create", "same_answer_as": [30] },
+        { "id": 30, "question": "Develop a plan to integrate cloud computing for scalable Big Data analytics in an organization.", "difficulty": "Higher", "bloom": "L6 - Create", "same_answer_as": [25] }
+      ]
+    },
+    {
+      "topic_no": 10,
+      "topic": "End-to-End Solution Design - Recommendation System",
+      "questions": [
+        { "id": 23, "question": "Design a Big Data analytics solution for an online shopping platform to recommend products using browsing history, purchase records, ratings, and customer reviews.", "difficulty": "Higher", "bloom": "L6 - Create", "same_answer_as": [28] },
+        { "id": 28, "question": "Apply Big Data analytics to optimize e-commerce recommendations.", "difficulty": "Higher", "bloom": "L6 - Create", "same_answer_as": [23] }
+      ]
+    }
+  ],
+  "summary": {
+    "total_questions": 30,
+    "unique_answers_needed": 23,
+    "repeat_pairs": [[2, 7], [11, 18], [12, 22], [15, 19], [23, 28], [25, 30], [26, 29]]
+  }
+}
